@@ -20,7 +20,8 @@
                             </label>
                         @endforeach
                     </div>
-                    <button type="submit" class="py-2 px-4 btn btn-success mt-3 fw-bold">Vote</button>
+                    <input type="hidden" name="polling_id" value="{{ $polling->id }}">
+                    <!-- Hapus tombol Vote -->
                 </form>
                 <div class="col-sm-12">
                     <div id="alert"></div>
@@ -28,4 +29,17 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // Ambil semua radio button dengan name="jawaban_id"
+        const radioButtons = document.querySelectorAll('input[name="jawaban_id"]');
+
+        // Tambahkan event listener untuk setiap radio button
+        radioButtons.forEach(radioButton => {
+            radioButton.addEventListener('change', function() {
+                // Submit form secara otomatis ketika radio button dipilih
+                document.getElementById('formVote').submit();
+            });
+        });
+    </script>
 @endsection
