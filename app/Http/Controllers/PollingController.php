@@ -34,9 +34,6 @@ class PollingController extends Controller
             'option' => 'required|array', // Pastikan 'option' adalah array
             'option.*' => 'required|string', // Pastikan setiap elemen dalam array 'option' adalah string yang diperlukan
         ]);
-
-
-
         // $option = $request->option;
         // $serializeOption = serialize($option);
 
@@ -79,12 +76,12 @@ class PollingController extends Controller
         $validated = $request->validate([
             'jawaban_id' => 'required|exists:jawabans,id',
         ]);
+        
 
         $jawaban = Jawaban::findOrFail($request->jawaban_id);
         $jawaban->vote += 1;
         $jawaban->save();
     }
-
 
     /**
      * Update the specified resource in storage.

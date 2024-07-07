@@ -44,11 +44,11 @@
                     <div id="additionalOptions"></div>
 
                     <!-- Tombol untuk menambah input -->
-                    <button type="button" id="addOptionBtn" class="btn btn-primary mb-3">Tambah Option +</button>
+                    <button type="button" id="addOptionBtn" class="btn btn-primary mb-3 fw-bold">Tambah Option +</button>
 
                     <div class="text-center mt-5">
                         <!-- Tombol submit -->
-                        <button type="submit" class="btn btn-success pl-5 pr-5 mt-2"><i class="fa mr-2 fa-paper-plane"></i>
+                        <button type="submit" class="btn btn-success pl-5 pr-5 mt-2 fw-bold"><i class="fa mr-2 fa-paper-plane"></i>
                             Buat
                             Polling</button>
                         {{-- Tombol setting --}}
