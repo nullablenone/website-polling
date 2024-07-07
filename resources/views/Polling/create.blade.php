@@ -48,7 +48,8 @@
 
                     <div class="text-center mt-5">
                         <!-- Tombol submit -->
-                        <button type="submit" class="btn btn-success pl-5 pr-5 mt-2 fw-bold"><i class="fa mr-2 fa-paper-plane"></i>
+                        <button type="submit" class="btn btn-success pl-5 pr-5 mt-2 fw-bold"><i
+                                class="fa mr-2 fa-paper-plane"></i>
                             Buat
                             Polling</button>
                         {{-- Tombol setting --}}
@@ -68,51 +69,61 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <!-- JavaScript untuk menambah input dan tombol delete -->
+    <!-- JavaScript -->
     <script>
-        $(document).ready(function() {
+        // fungsi untuk menghitung sisa karakter di textarea
+        document.addEventListener('DOMContentLoaded', function() {
             // Max karakter yang diizinkan
             const maxLength = 160;
 
             // Update sisa karakter saat halaman pertama kali dimuat
-            updateCharCounter($('#title').val().length);
+            updateCharCounter(document.getElementById('title').value.length);
 
-            // Event listener buat ngupdate sisa karakter
-            $('#title').on('input', function() {
-                const length = $(this).val().length;
+            // Event listener untuk input title
+            document.getElementById('title').addEventListener('input', function() {
+                const length = this.value.length;
                 updateCharCounter(length);
             });
 
-            // Fungsi buat ngupdate sisa karakter
+            // Fungsi untuk update sisa karakter
             function updateCharCounter(length) {
                 const remaining = maxLength - length;
-                $('#charCounter').text(remaining + ' characters remaining');
+                document.getElementById('charCounter').textContent = remaining + ' characters remaining';
             }
+
+
+            // Fungsi untuk menambahkan Button
             let optionCount = 2; // Dimulai dari 2 karena sudah ada 2 input awal
 
-            // Fungsi untuk menambah input field baru
-            $('#addOptionBtn').click(function() {
+            // Event listener untuk tombol "Add Option"
+            document.getElementById('addOptionBtn').addEventListener('click', function() {
                 optionCount++; // Tambah jumlah input
 
                 // HTML untuk input baru beserta tombol delete
                 const newOption = `
-                <div class="form-group" id="option${optionCount}Wrapper">
-                    <div class="input-group">
-                        <input type="text" name="option[]" class="form-control" id="option${optionCount}" required placeholder="Pillihan" autocomplete="off">
-                        <div class="input-group-append">
-                            <button type="button" class="btn btn-danger" onclick="removeOption(${optionCount})">Delete</button>
-                        </div>
+            <div class="form-group" id="option${optionCount}Wrapper">
+                <div class="input-group">
+                    <input type="text" name="option[]" class="form-control" id="option${optionCount}" required placeholder="Pilihan" autocomplete="off">
+                    <div class="input-group-append">
+                        <button type="button" class="btn btn-danger" onclick="removeOption(${optionCount})">Delete</button>
                     </div>
-                </div>`;
+                </div>
+            </div>`;
+
+                // Buat elemen div baru
+                const wrapper = document.createElement('div');
+                wrapper.innerHTML = newOption.trim();
 
                 // Tambahkan input baru ke dalam div #additionalOptions
-                $('#additionalOptions').append(newOption);
+                document.getElementById('additionalOptions').appendChild(wrapper.firstChild);
             });
 
             // Fungsi untuk menghapus input field
             window.removeOption = function(optionNumber) {
-                $(`#option${optionNumber}Wrapper`)
-                    .remove(); // Hapus div input wrapper sesuai dengan nomor input
+                const wrapper = document.getElementById(`option${optionNumber}Wrapper`);
+                if (wrapper) {
+                    wrapper.remove(); // Hapus div input wrapper sesuai dengan nomor input
+                }
             };
         });
     </script>
