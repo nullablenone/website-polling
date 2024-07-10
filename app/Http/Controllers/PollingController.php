@@ -76,11 +76,27 @@ class PollingController extends Controller
         $validated = $request->validate([
             'jawaban_id' => 'required|exists:jawabans,id',
         ]);
-        
 
+        //menambah jumlah vote
         $jawaban = Jawaban::findOrFail($request->jawaban_id);
         $jawaban->vote += 1;
-        $jawaban->save();
+        $jawaban->save();;
+
+        //mengambil model polling berdasarkan id, id yang di kirim di form melalui input type hiiden
+        $pollingId = Polling::findOrFail($request->polling_id);
+        return redirect()->route('polling.showStatus', $pollingId->id);
+    }
+
+    public function showStatus($id)
+    {
+        $polling = Polling::findOrFail($id);
+        return view('Polling.showStatus', ['polling' => $polling]);
+    }
+
+    public function showPolling($id)
+    {
+        $polling = Polling::findOrFail($id);
+        return view('Polling.showPolling', ['polling' => $polling]);
     }
 
     /**
