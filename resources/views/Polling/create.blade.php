@@ -2,73 +2,59 @@
 
 @section('content')
     <div class="container mt-5">
-
-        <!-- Section Title -->
-        {{-- <div class="container section-title mt-5" data-aos="fade-up">
-            <h2>Buat Polling Anda sendiri</h2>
-        </div><!-- End Section Title --> --}}
-
         <!-- Form untuk polling -->
-        <form id="pollingForm" class="php-email form mt-5 container" action="{{ route('polling.store') }}" method="POST">
-            <div class="row gy-1" data-aos="fade-up" data-aos-delay="100">
+        <form id="pollingForm" class="form mt-5" action="{{ route('polling.store') }}" method="POST">
+            <div class="card shadow-lg">
                 <!-- CSRF Token -->
                 @csrf
 
+                <div class="card-header text-center text-white">
+                    <h1>Buat Polling Sendiri</h1>
+                </div>
 
-                <div class="card">
-                    {{-- form input pertanyaan --}}
+                <div class="card-body">
+                    <!-- Input pertanyaan -->
                     <div class="form-group">
-                        <div class="card-header text-center">
-                            <h1>Buat Polling Sendiri</h1>
-                        </div>
-                        <label for="" class=""><b>Pertanyaan</b></label>
+                        <label for="title"><b>Pertanyaan</b></label>
                         <textarea name="title" class="form-control" id="title" autofocus="on" required maxlength="160" cols="30"
                             rows="2"></textarea>
-                        <div class="char-counter" id="charCounter">160 characters remaining</div>
+                        <div class="char-counter text-muted" id="charCounter">160 characters remaining</div>
                     </div>
 
-                    <!-- Input pertama -->
+                    <!-- Input pilihan pertama -->
                     <div class="form-group">
-                        <label for="title"><b>Ketikan Pilihan Dibawah Ini</b></label>
+                        <label for="option1"><b>Ketikan Pilihan Dibawah Ini</b></label>
                         <input type="text" name="option[]" class="form-control" id="option1" required
-                            placeholder="Pillihan" autocomplete="off">
+                            placeholder="Pilihan" autocomplete="off">
                     </div>
 
-                    <!-- Input kedua -->
+                    <!-- Input pilihan kedua -->
                     <div class="form-group">
                         <input type="text" name="option[]" class="form-control" id="option2" required
-                            placeholder="Pillihan" autocomplete="off">
+                            placeholder="Pilihan" autocomplete="off">
                     </div>
 
                     <!-- Tempat untuk input tambahan -->
                     <div id="additionalOptions"></div>
 
                     <!-- Tombol untuk menambah input -->
-                    <button type="button" id="addOptionBtn" class="btn btn-primary mb-3 fw-bold">Tambah Option +</button>
-
-                    <div class="text-center mt-5">
-                        <!-- Tombol submit -->
-                        <button type="submit" class="btn btn-success pl-5 pr-5 mt-2 fw-bold"><i
-                                class="fa mr-2 fa-paper-plane"></i>
-                            Buat
-                            Polling</button>
-                        {{-- Tombol setting --}}
-                        <button type="button" name="advance" class="btn btn-default mt-2" data-toggle="collapse"
-                            data-target="#el_advanced"><i class="fa mr-2 fa-cog"></i> Setting Tambahan</button>
-                    </div>
-                    <br>
-                    <div class="alert alert-info my-4"><b>Perhatian:</b> Dilarang membuat Polling yang berbau Provokasi,
-                        Radikalisme dan
-                        SARA</div>
+                    <button type="button" id="addOptionBtn" class="btn btn-secondary mb-3 fw-bold">Tambah Option +</button>
                 </div>
+
+                <div class="card-footer text-center">
+                    <!-- Tombol submit -->
+                    <button type="submit" class="btn btn-primary pl-5 pr-5 mt-2 fw-bold"><i
+                            class="fa mr-2 fa-paper-plane"></i>
+                        Buat Polling</button>
+                </div>
+
+                <div class="alert alert-info my-4 text-center"><b>Perhatian:</b> Dilarang membuat Polling yang berbau
+                    Provokasi,
+                    Radikalisme, dan SARA</div>
             </div>
         </form>
     </div>
 
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <!-- Bootstrap JS -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <!-- JavaScript -->
     <script>
         // fungsi untuk menghitung sisa karakter di textarea
@@ -90,7 +76,6 @@
                 const remaining = maxLength - length;
                 document.getElementById('charCounter').textContent = remaining + ' characters remaining';
             }
-
 
             // Fungsi untuk menambahkan Button
             let optionCount = 2; // Dimulai dari 2 karena sudah ada 2 input awal
