@@ -5,20 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Jawaban;
 use App\Models\Polling;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Cookie;
 
 class PollingController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('Polling.create');
@@ -37,6 +29,24 @@ class PollingController extends Controller
         // $option = $request->option;
         // $serializeOption = serialize($option);
 
+        $maxPolling = 3;
+
+        // Ambil jumlah polling dari cookie, default 0 jika belum ada cookie
+        $statusPolling = Cookie::get('polls_count', 0);
+
+        // Ambil tanggal terakhir kali polling dibuat dari cookie
+        $terakhirPolling = Cookie::get('last_poll_date');
+
+        // Cek apakah polling terakhir dibuat bukan hari ini
+        if ($terakhirPolling && Carbon::parse($terakhirPolling)->isToday() == false) {
+            $statusPolling = 0; // Reset counter jika polling terakhir dibuat bukan hari ini
+        }
+
+        // Cek apakah user sudah mencapai batas maksimal polling per hari
+        if ($statusPolling >= $maxPolling) {
+            return back()->with('error', 'Anda telah mencapai batas maksimal polling hari ini.');
+        }
+
         $polling = new Polling;
         $polling->title = $request->title;
         $polling->save();
@@ -47,6 +57,11 @@ class PollingController extends Controller
             $jawaban->option = $option;
             $jawaban->save();
         }
+
+        // update cookie
+        Cookie::queue('polls_count', ++$statusPolling, 1440); // 1440 menit = 1 hari
+        Cookie::queue('last_poll_date', Carbon::now()->toDateString(), 1440);
+
 
         // $polling->option = $serializeOption;
 
@@ -102,9 +117,12 @@ class PollingController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function pollingTersimpan()
     {
-        //
+        $polling = Polling::get();
+        return view('Polling.pollingTersimpan', [
+            'pollings' => $polling
+        ]);
     }
 
     /**
