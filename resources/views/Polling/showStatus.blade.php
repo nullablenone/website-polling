@@ -15,14 +15,25 @@
                     </a>
                     <br>
                     {{-- url()->previous() untuk mengembalikan ke halaman sebelumnya --}}
-                    <a class="btn btn-dark mt-2" href="{{ url()->previous() }}"> 
+                    <a class="btn btn-dark mt-2" href="{{ url()->previous() }}">
                         <i class="fas fa-arrow-left mr-2"></i> Kembali Ke Polling
                     </a>
                 </div>
             </div>
         </div>
-        <div class="col-sm-12 mt-3">
-            <div id="alert"></div>
+        <div class="alert alert-info text-center mt-4">
+            <h5 class="alert-heading"><strong>TENTANG POLLING INI</strong></h5>
+            <p>Polling tentang <span class="fw-bold"><a href="#"
+                        class="text-info text-decoration-none">{{ $polling->title }}</a></span> dibuat pada <span
+                    class="fw-bold">{{ $polling->created_at->format('d-m-Y') }}</span>
+            </p>
+            <p>Polling ini memiliki opsi jawaban dan sudah menerima <span class="fw-bold"
+                    id="cVote">{{ $polling->jawaban->sum('vote') }}</span> suara.</p>
+            <hr>
+            <p class="mb-0">Melakukan pemilihan berulang kali tidak diperbolehkan. Pemeriksaan duplikasi didasarkan pada
+                alamat IP pemilih. Kami tidak mentolerir setiap kecurangan yang dilakukan dan akan menganulir semua suara
+                yang
+                berindikasi dilakukan oleh bot.</p>
         </div>
     </div>
 @endsection

@@ -22,12 +22,12 @@
                     </div>
                 </form>
                 <div class="dropdown mt-4 d-flex justify-content-center">
-                    <a class="btn btn-info mx-2" href="{{ route('polling.showPolling', $polling->id) }}">
-                        <i class="fa mr-2 fa-pie-chart" aria-hidden="true"></i> Lihat Hasil Polling
+                    <a class="btn btn-primary mx-2" href="{{ route('polling.showPolling', $polling->id) }}">
+                        <i class="fa mr-2 fa-pie-chart text-light" aria-hidden="true"></i> Lihat Hasil Polling
                     </a>
-                    <button class="btn btn-secondary mx-2" type="button" onclick="savePolling();" id="btnSave">
-                        <i class="fa mr-2 fa-external-link"></i> Polling Tersimpan
-                    </button>
+                    <a class="btn btn-success mx-2" href="{{ route('polling.pollingTersimpan') }}">
+                        <i class="fa mr-2 fa-check-circle text-light" aria-hidden="true"></i> Polling Tersimpan
+                    </a>
                 </div>
                 <div class="col-sm-12 mt-3">
                     <div id="alert"></div>

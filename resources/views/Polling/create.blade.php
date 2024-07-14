@@ -38,7 +38,7 @@
                     <div id="additionalOptions"></div>
 
                     <!-- Tombol untuk menambah input -->
-                    <button type="button" id="addOptionBtn" class="btn btn-secondary mb-3 fw-bold">Tambah Option +</button>
+                    <button type="button" id="addOptionBtn" class="btn btn-warning mb-3 fw-bold">Tambah Option +</button>
                 </div>
 
                 <div class="card-footer text-center">
