@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Jawaban;
 use App\Models\Polling;
+use App\Models\BatasPolling;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Cookie;
 
 class PollingController extends Controller
 {
@@ -26,26 +26,36 @@ class PollingController extends Controller
             'option' => 'required|array', // Pastikan 'option' adalah array
             'option.*' => 'required|string', // Pastikan setiap elemen dalam array 'option' adalah string yang diperlukan
         ]);
-        // $option = $request->option;
-        // $serializeOption = serialize($option);
+        $maxPolling = 3; // Batas maksimal polling per hari
+        $ipAddress = $request->ip(); // Ambil alamat IP pengguna
+        $pollingLimit = BatasPolling::where('ip_address', $ipAddress)->first(); // Cek apakah sudah ada entry untuk IP ini
 
-        $maxPolling = 3;
+        // Cek apakah sudah ada entry untuk IP ini
+        if ($pollingLimit) {
+            // Reset jika sudah sehari
+            if ($pollingLimit->tanggal_polling && Carbon::parse($pollingLimit->tanggal_polling)->isToday() == false) {
+                $pollingLimit->jumlah_polling = 0; // Reset counter jika polling terakhir tidak dibuat hari ini
+                $pollingLimit->tanggal_polling = null; // Reset tanggal
+            }
 
-        // Ambil jumlah polling dari cookie, default 0 jika belum ada cookie
-        $statusPolling = Cookie::get('polls_count', 0);
+            // Cek batas polling
+            if ($pollingLimit->jumlah_polling >= $maxPolling) {
+                return back()->with('error', 'Anda telah mencapai batas maksimal polling hari ini.');
+            }
 
-        // Ambil tanggal terakhir kali polling dibuat dari cookie
-        $terakhirPolling = Cookie::get('last_poll_date');
-
-        // Cek apakah polling terakhir dibuat bukan hari ini
-        if ($terakhirPolling && Carbon::parse($terakhirPolling)->isToday() == false) {
-            $statusPolling = 0; // Reset counter jika polling terakhir dibuat bukan hari ini
+            // Update jumlah polling
+            $pollingLimit->jumlah_polling++;
+            $pollingLimit->tanggal_polling = Carbon::now()->toDateString(); // Simpan tanggal hari ini
+            $pollingLimit->save(); // Simpan perubahan ke database
+        } else {
+            // Jika belum ada, buat entri baru
+            BatasPolling::create([
+                'ip_address' => $ipAddress,
+                'jumlah_polling' => 1,
+                'tanggal_polling' => Carbon::now()->toDateString(), // Simpan tanggal hari ini
+            ]);
         }
 
-        // Cek apakah user sudah mencapai batas maksimal polling per hari
-        if ($statusPolling >= $maxPolling) {
-            return back()->with('error', 'Anda telah mencapai batas maksimal polling hari ini.');
-        }
 
         $polling = new Polling;
         $polling->title = $request->title;
@@ -57,13 +67,6 @@ class PollingController extends Controller
             $jawaban->option = $option;
             $jawaban->save();
         }
-
-        // update cookie
-        Cookie::queue('polls_count', ++$statusPolling, 1440); // 1440 menit = 1 hari
-        Cookie::queue('last_poll_date', Carbon::now()->toDateString(), 1440);
-
-
-        // $polling->option = $serializeOption;
 
         return redirect()->route('polling.show', $polling->id)->with('success', 'Polling berhasil dibuat!');
     }

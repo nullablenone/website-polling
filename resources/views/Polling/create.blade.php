@@ -2,6 +2,11 @@
 
 @section('content')
     <div class="container mt-5">
+        @if (session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
         <!-- Form untuk polling -->
         <form id="pollingForm" class="form mt-5" action="{{ route('polling.store') }}" method="POST">
             <div class="card shadow-lg">
@@ -38,7 +43,7 @@
                     <div id="additionalOptions"></div>
 
                     <!-- Tombol untuk menambah input -->
-                    <button type="button" id="addOptionBtn" class="btn btn-warning mb-3 fw-bold">Tambah Option +</button>
+                    <button type="button" id="addOptionBtn" class="btn btn-primary mb-3 fw-bold">Tambah Option +</button>
                 </div>
 
                 <div class="card-footer text-center">
