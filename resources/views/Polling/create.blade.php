@@ -21,10 +21,17 @@
                     <!-- Input pertanyaan -->
                     <div class="form-group">
                         <label for="title"><b>Pertanyaan</b></label>
-                        <textarea name="title" class="form-control" id="title" autofocus="on" required maxlength="160" cols="30"
-                            rows="2"></textarea>
+                        <textarea name="title"
+                            class="form-control   @error('title')
+                        is-invalid
+                    @enderror"
+                            id="title" autofocus="on" required maxlength="160" cols="30" rows="2"></textarea>
+                        @error('title')
+                            <span class="invalid-feedback">{{ $message }}</span>
+                        @enderror
                         <div class="char-counter text-muted" id="charCounter">160 characters remaining</div>
                     </div>
+
 
                     <!-- Input pilihan pertama -->
                     <div class="form-group">

@@ -52,8 +52,8 @@
 
                 <nav id="navmenu" class="navmenu">
                     <ul>
-                        <li><a href="{{ route('polling.create') }}" class="active">Home<br></a></li>
-                        <li><a href="#about">About</a></li>
+                        <li><a href="{{ route('polling.create') }}" class="active">Beranda<br></a></li>
+                        <li><a href="{{ route('polling.tentang') }}">Tentang</a></li>
                         <li><a href="{{ route('polling.pollingTersimpan') }}">Polling Tersimpan</a></li>
                         {{-- <li><a href="#portfolio">Portfolio</a></li> --}}
                         {{-- <li><a href="#team">Team</a></li> --}}

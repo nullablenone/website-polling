@@ -4,6 +4,7 @@ use App\Http\Controllers\PollingController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PollingController::class, 'create'])->name('polling.create');
+Route::get('/tentang', [PollingController::class, 'tentang'])->name('polling.tentang');
 
 // Route Utama
 Route::get('/{polling}', [PollingController::class, 'show'])->name('polling.show');

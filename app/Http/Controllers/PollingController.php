@@ -15,50 +15,48 @@ class PollingController extends Controller
     {
         return view('Polling.create');
     }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'title' => 'required',
+            'title' => 'required|min:5',
             'option' => 'required|array', // Pastikan 'option' adalah array
             'option.*' => 'required|string', // Pastikan setiap elemen dalam array 'option' adalah string yang diperlukan
         ]);
         $maxPolling = 3; // Batas maksimal polling per hari
         $ipAddress = $request->ip(); // Ambil alamat IP pengguna
-        $pollingLimit = BatasPolling::where('ip_address', $ipAddress)->first(); // Cek apakah sudah ada entry untuk IP ini
+        $batasPolling = BatasPolling::where('ip_address', $ipAddress)->first(); // Cek apakah sudah ada entry untuk IP ini
 
         // Cek apakah sudah ada entry untuk IP ini
-        if ($pollingLimit) {
+        if ($batasPolling) {
             // Reset jika sudah sehari
-            if ($pollingLimit->tanggal_polling && Carbon::parse($pollingLimit->tanggal_polling)->isToday() == false) {
-                $pollingLimit->jumlah_polling = 0; // Reset counter jika polling terakhir tidak dibuat hari ini
-                $pollingLimit->tanggal_polling = null; // Reset tanggal
+            if ($batasPolling->tanggal_polling && Carbon::parse($batasPolling->tanggal_polling)->isToday() == false) {
+                $batasPolling->jumlah_polling = 0;
+                $batasPolling->tanggal_polling = null;
             }
 
             // Cek batas polling
-            if ($pollingLimit->jumlah_polling >= $maxPolling) {
+            if ($batasPolling->jumlah_polling >= $maxPolling) {
                 return back()->with('error', 'Anda telah mencapai batas maksimal polling hari ini.');
             }
 
             // Update jumlah polling
-            $pollingLimit->jumlah_polling++;
-            $pollingLimit->tanggal_polling = Carbon::now()->toDateString(); // Simpan tanggal hari ini
-            $pollingLimit->save(); // Simpan perubahan ke database
+            $batasPolling->jumlah_polling++;
+            $batasPolling->tanggal_polling = Carbon::now()->toDateString(); // Simpan tanggal hari ini
+            $batasPolling->save(); // Simpan perubahan ke database
         } else {
             // Jika belum ada, buat entri baru
-            BatasPolling::create([
-                'ip_address' => $ipAddress,
-                'jumlah_polling' => 1,
-                'tanggal_polling' => Carbon::now()->toDateString(), // Simpan tanggal hari ini
-            ]);
+
+            $batasPolling = new BatasPolling;
+            $batasPolling->ip_address = $ipAddress;
+            $batasPolling->jumlah_polling = 1;
+            $batasPolling->tanggal_polling = Carbon::now()->toDateString(); // Simpan tanggal hari ini
+            $batasPolling->save();
         }
 
 
         $polling = new Polling;
         $polling->title = $request->title;
+        $polling->ip_address = $ipAddress;
         $polling->save();
 
         foreach ($request->option as $option) {
@@ -71,9 +69,6 @@ class PollingController extends Controller
         return redirect()->route('polling.show', $polling->id)->with('success', 'Polling berhasil dibuat!');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         $polling = Polling::findOrFail($id);
@@ -81,13 +76,6 @@ class PollingController extends Controller
         return view('Polling.show', ['polling' => $polling]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
 
     public function vote(Request $request, $id)
     {
@@ -117,22 +105,19 @@ class PollingController extends Controller
         return view('Polling.showPolling', ['polling' => $polling]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function pollingTersimpan()
+
+    public function pollingTersimpan(Request $request)
     {
-        $polling = Polling::get();
+        $ip = $request->ip();
+        // tangkap ip address
+        $polling = Polling::where('ip_address', $ip)->get();
         return view('Polling.pollingTersimpan', [
             'pollings' => $polling
         ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function tentang()
     {
-        //
+        return view('polling.tentang');
     }
 }

@@ -1,5 +1,4 @@
 @extends('layouts')
-
 @section('content')
     <div class="container mt-5">
         <div class="section-title text-center mb-4">

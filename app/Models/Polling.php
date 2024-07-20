@@ -13,4 +13,5 @@ class Polling extends Model
     {
         return $this->hasMany(Jawaban::class);
     }
+
 }
