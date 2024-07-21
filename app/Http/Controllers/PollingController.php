@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Vote;
 use App\Models\Jawaban;
 use App\Models\Polling;
 use App\Models\BatasPolling;
@@ -65,8 +66,7 @@ class PollingController extends Controller
             $jawaban->option = $option;
             $jawaban->save();
         }
-
-        return redirect()->route('polling.show', $polling->id)->with('success', 'Polling berhasil dibuat!');
+        return redirect()->route('polling.show', $polling->id);
     }
 
     public function show(string $id)
@@ -82,11 +82,31 @@ class PollingController extends Controller
         $validated = $request->validate([
             'jawaban_id' => 'required|exists:jawabans,id',
         ]);
+        $ipAddress = $request->ip(); // Tangkap IP pengguna
+
+        // Ambil polling terkait jawaban_id
+        $pollingId = Jawaban::where('id', $request->jawaban_id)->value('polling_id');
+
+        // Cek apakah IP sudah pernah vote untuk polling ini
+        $existingVote = Vote::where('polling_id', $pollingId)
+            ->where('ip_address', $ipAddress)
+            ->first();
+
+        if ($existingVote) {
+            // Jika sudah vote, berikan feedback dan redirect
+            return redirect()->route('polling.show', $pollingId)->with('error', 'Anda sudah melakukan vote.');
+        }
 
         //menambah jumlah vote
         $jawaban = Jawaban::findOrFail($request->jawaban_id);
         $jawaban->vote += 1;
         $jawaban->save();;
+
+        //simpan ip_address ke table votes
+        $vote = new Vote;
+        $vote->polling_id = $pollingId;
+        $vote->ip_address = $ipAddress;
+        $vote->save();
 
         //mengambil model polling berdasarkan id, id yang di kirim di form melalui input type hiiden
         $pollingId = Polling::findOrFail($request->polling_id);
@@ -119,5 +139,12 @@ class PollingController extends Controller
     public function tentang()
     {
         return view('polling.tentang');
+    }
+
+    public function destroy($id)
+    {
+        $polling = Polling::findOrFail($id);
+        $polling->delete();
+        return redirect()->route('polling.pollingTersimpan');
     }
 }
