@@ -12,9 +12,12 @@
                         <a href="{{ route('polling.show', $polling->id) }}" class="h5 text-primary">{{ $polling->title }}</a>
                         <div class="text-muted">Dibuat {{ $polling->created_at->format('d-m-Y') }}</div>
                     </div>
-                    <button class="btn btn-danger" type="button" onclick="delFav({{ $polling->id }})">
-                        <i class="fa fa-trash"></i>
-                    </button>
+
+                    <form action="{{ route('polling.destroy', $polling->id) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button class="btn btn-danger" type="button">Hapus</button>
+                    </form>
                 </div>
             </div>
         @endforeach
