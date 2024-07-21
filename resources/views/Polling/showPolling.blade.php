@@ -23,8 +23,9 @@
                             </div>
                             <div class="progress mt-2" style="height: 25px;">
                                 <!-- Mengatur lebar progress bar berdasarkan persentase yang telah dihitung -->
-                                <div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: {{ $percentage }}%;"
-                                    aria-valuenow="{{ $percentage }}" aria-valuemin="0" aria-valuemax="100">
+                                <div class="progress-bar progress-bar-striped bg-info" role="progressbar"
+                                    style="width: {{ $percentage }}%;" aria-valuenow="{{ $percentage }}"
+                                    aria-valuemin="0" aria-valuemax="100">
                                     {{ number_format($percentage, 2) }}%
                                 </div>
                             </div>
@@ -35,7 +36,26 @@
                     <!-- Menampilkan total suara -->
                     <h5>Total: <span id="spanCount">{{ $totalVotes }}</span> suara</h5>
                 </div>
+
+            </div>
+            <div class="alert alert-info text-center mt-4 card shadow-lg">
+                <h5 class="alert-heading"><strong>TENTANG POLLING INI</strong></h5>
+                <p>Polling tentang <span class="fw-bold"><a href="#"
+                            class="text-info text-decoration-none">{{ $polling->title }}</a></span> dibuat pada <span
+                        class="fw-bold">{{ $polling->created_at->format('d-m-Y') }}</span></p>
+                <p>Polling ini memiliki opsi jawaban dan sudah menerima <span class="fw-bold"
+                        id="cVote">{{ $polling->jawaban->sum('vote') }}</span> suara.</p>
+                <p class="mb-0">Melakukan pemilihan berulang kali tidak diperbolehkan. Pemeriksaan duplikasi didasarkan
+                    pada
+                    alamat IP pemilih. Kami tidak mentolerir setiap kecurangan yang dilakukan dan akan menganulir semua
+                    suara
+                    yang berindikasi dilakukan oleh bot.</p>
+            </div>
+
+            <div class="text-center">
+                <a href="{{ route('polling.create') }}" class="btn btn-danger mt-4 shadow">Buat Polling Anda Sendiri</a>
             </div>
         </div>
+    </div>
     </div>
 @endsection

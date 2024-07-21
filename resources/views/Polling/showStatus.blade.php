@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container mt-5">
-        <div class="card">
+        <div class="card shadow-lg">
             <div class="card-body text-center">
                 <h2 class="text-success fw-bold">Terima kasih</h2>
                 <p class="mb-4">Pilihan Anda berhasil disimpan!</p>
@@ -10,18 +10,18 @@
                     <i class="fas fa-check-circle text-success" style="font-size: 150px;"></i>
                 </div>
                 <div class="mt-4">
-                    <a class="btn btn-info mb-2" href="{{ route('polling.showPolling', $polling->id) }}">
+                    <a class="btn btn-info mb-2 shadow" href="{{ route('polling.showPolling', $polling->id) }}">
                         <i class="fas fa-pie-chart mr-2"></i> Lihat Hasil Polling
                     </a>
                     <br>
                     {{-- url()->previous() untuk mengembalikan ke halaman sebelumnya --}}
-                    <a class="btn btn-dark mt-2" href="{{ url()->previous() }}">
+                    <a class="btn btn-dark mt-2 shadow" href="{{ url()->previous() }}">
                         <i class="fas fa-arrow-left mr-2"></i> Kembali Ke Polling
                     </a>
                 </div>
             </div>
         </div>
-        <div class="alert alert-info text-center mt-4">
+        <div class="alert alert-info text-center mt-4 card shadow">
             <h5 class="alert-heading"><strong>TENTANG POLLING INI</strong></h5>
             <p>Polling tentang <span class="fw-bold"><a href="#"
                         class="text-info text-decoration-none">{{ $polling->title }}</a></span> dibuat pada <span
@@ -35,5 +35,10 @@
                 yang
                 berindikasi dilakukan oleh bot.</p>
         </div>
+
+        <div class="text-center">
+            <a href="{{ route('polling.create') }}" class="btn btn-danger mt-4 shadow">Buat Polling Anda Sendiri</a>
+        </div>
+
     </div>
 @endsection

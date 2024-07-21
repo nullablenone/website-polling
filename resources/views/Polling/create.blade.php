@@ -50,12 +50,13 @@
                     <div id="additionalOptions"></div>
 
                     <!-- Tombol untuk menambah input -->
-                    <button type="button" id="addOptionBtn" class="btn btn-primary mb-3 fw-bold">Tambah Option +</button>
+                    <button type="button" id="addOptionBtn" class="btn btn-secondary mb-3 fw-bold shadow">Tambah Option
+                        +</button>
                 </div>
 
                 <div class="card-footer text-center">
                     <!-- Tombol submit -->
-                    <button type="submit" class="btn btn-primary pl-5 pr-5 mt-2 fw-bold"><i
+                    <button type="submit" class="btn btn-primary pl-5 pr-5 mt-2 fw-bold shadow"><i
                             class="fa mr-2 fa-paper-plane"></i>
                         Buat Polling</button>
                 </div>
