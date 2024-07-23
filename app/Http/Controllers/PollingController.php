@@ -145,6 +145,6 @@ class PollingController extends Controller
     {
         $polling = Polling::findOrFail($id);
         $polling->delete();
-        return redirect()->route('polling.pollingTersimpan');
+        return redirect()->route('polling.pollingTersimpan')->with('success', 'Polling berhasil di hapus.');
     }
 }

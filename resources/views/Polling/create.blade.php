@@ -1,5 +1,5 @@
 @extends('layouts')
-
+@section('title', 'Buat Polling')
 @section('content')
     <div class="container mt-5">
         @if (session('error'))

@@ -1,5 +1,5 @@
 @extends('layouts')
-
+@section('title', 'Hasil Polling')
 @section('content')
     <div class="container mt-5 d-flex justify-content-center">
         <div class="col-md-8">

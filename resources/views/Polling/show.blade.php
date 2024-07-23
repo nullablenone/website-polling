@@ -1,5 +1,5 @@
 @extends('layouts')
-
+@section('title', 'Pilih Polling')
 @section('content')
     <!-- Content -->
     <div class="container mt-5">
