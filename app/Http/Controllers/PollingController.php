@@ -12,79 +12,104 @@ use Illuminate\Routing\Controller;
 
 class PollingController extends Controller
 {
+
+    // Menampilkan form untuk membuat polling baru
     public function create()
     {
         return view('Polling.create');
     }
+
+
+    // Menyimpan polling baru ke database
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'title' => 'required|min:5',
-            'option' => 'required|array', // Pastikan 'option' adalah array
-            'option.*' => 'required|string', // Pastikan setiap elemen dalam array 'option' adalah string yang diperlukan
-        ]);
-        $maxPolling = 3; // Batas maksimal polling per hari
-        $ipAddress = $request->ip(); // Ambil alamat IP pengguna
-        $batasPolling = BatasPolling::where('ip_address', $ipAddress)->first(); // Cek apakah sudah ada entry untuk IP ini
 
-        // Cek apakah sudah ada entry untuk IP ini
+        // Validasi input dari form polling
+        $validated = $request->validate([
+            'title' => 'required|min:5', // Judul polling harus ada dan minimal 5 karakter
+            'option' => 'required|array', // Opsi polling harus berupa array
+            'option.*' => 'required|string', // Setiap elemen di array option harus berupa string
+        ]);
+
+
+        $maxPolling = 3; // Batas maksimal polling yang bisa dibuat per hari
+
+        $ipAddress = $request->ip(); // Mendapatkan IP address pengguna
+
+        // Cek apakah IP pengguna sudah ada di tabel batas polling
+        $batasPolling = BatasPolling::where('ip_address', $ipAddress)->first();
+
+
+        // Jika ada entry dengan IP yang sama
         if ($batasPolling) {
-            // Reset jika sudah sehari
+            // Reset polling jika sudah berganti hari
             if ($batasPolling->tanggal_polling && Carbon::parse($batasPolling->tanggal_polling)->isToday() == false) {
-                $batasPolling->jumlah_polling = 0;
-                $batasPolling->tanggal_polling = null;
+                $batasPolling->jumlah_polling = 0; // Reset jumlah polling ke 0
+                $batasPolling->tanggal_polling = null; // Reset tanggal polling
             }
 
-            // Cek batas polling
+
+            // Jika jumlah polling sudah mencapai batas harian
             if ($batasPolling->jumlah_polling >= $maxPolling) {
                 return back()->with('error', 'Anda telah mencapai batas maksimal polling hari ini.');
             }
 
-            // Update jumlah polling
-            $batasPolling->jumlah_polling++;
-            $batasPolling->tanggal_polling = Carbon::now()->toDateString(); // Simpan tanggal hari ini
-            $batasPolling->save(); // Simpan perubahan ke database
-        } else {
-            // Jika belum ada, buat entri baru
 
+            // Jika belum mencapai batas, update jumlah polling dan simpan ke database
+            $batasPolling->jumlah_polling++;
+            $batasPolling->tanggal_polling = Carbon::now()->toDateString(); // Simpan tanggal polling hari ini
+            $batasPolling->save(); // Update entry di database
+
+        } else {
+            // Jika belum ada entry untuk IP ini, buat yang baru
             $batasPolling = new BatasPolling;
-            $batasPolling->ip_address = $ipAddress;
-            $batasPolling->jumlah_polling = 1;
-            $batasPolling->tanggal_polling = Carbon::now()->toDateString(); // Simpan tanggal hari ini
-            $batasPolling->save();
+            $batasPolling->ip_address = $ipAddress; // Simpan IP address pengguna
+            $batasPolling->jumlah_polling = 1; // Set polling pertama
+            $batasPolling->tanggal_polling = Carbon::now()->toDateString(); // Simpan tanggal polling hari ini
+            $batasPolling->save(); // Simpan entry baru ke database
         }
 
 
+        // Membuat polling baru dan menyimpan ke database
         $polling = new Polling;
-        $polling->title = $request->title;
-        $polling->ip_address = $ipAddress;
-        $polling->save();
+        $polling->title = $request->title; // Set title polling
+        $polling->ip_address = $ipAddress; // Simpan IP address pembuat polling
+        $polling->save(); // Simpan polling ke database
 
+
+        // Simpan setiap opsi/jawaban ke tabel 'jawaban'
         foreach ($request->option as $option) {
             $jawaban = new Jawaban;
-            $jawaban->polling_id = $polling->id;
-            $jawaban->option = $option;
-            $jawaban->save();
+            $jawaban->polling_id = $polling->id; // Hubungkan jawaban dengan polling
+            $jawaban->option = $option; // Set opsi/jawaban
+            $jawaban->save(); // Simpan jawaban ke database
         }
+
+        // Redirect ke halaman polling yang baru dibuat
         return redirect()->route('polling.show', $polling->id);
     }
 
+
+    // Menampilkan detail polling berdasarkan ID
     public function show(string $id)
     {
-        $polling = Polling::findOrFail($id);
+        $polling = Polling::findOrFail($id); // Ambil polling dari database berdasarkan ID
 
-        return view('Polling.show', ['polling' => $polling]);
+        return view('Polling.show', ['polling' => $polling]); // Tampilkan polling di view
     }
 
 
+    // Proses pemungutan suara/vote
     public function vote(Request $request, $id)
     {
+        // Validasi input: pastikan jawaban_id ada di tabel jawabans
         $validated = $request->validate([
             'jawaban_id' => 'required|exists:jawabans,id',
         ]);
-        $ipAddress = $request->ip(); // Tangkap IP pengguna
 
-        // Ambil polling terkait jawaban_id
+        $ipAddress = $request->ip(); // Mendapatkan IP address pengguna
+
+        // Ambil polling terkait dengan jawaban_id yang dipilih
         $pollingId = Jawaban::where('id', $request->jawaban_id)->value('polling_id');
 
         // Cek apakah IP sudah pernah vote untuk polling ini
@@ -92,59 +117,66 @@ class PollingController extends Controller
             ->where('ip_address', $ipAddress)
             ->first();
 
+        // Jika sudah pernah vote, beri feedback dan redirect
         if ($existingVote) {
-            // Jika sudah vote, berikan feedback dan redirect
             return redirect()->route('polling.show', $pollingId)->with('error', 'Anda sudah melakukan vote.');
         }
 
-        //menambah jumlah vote
+        // Menambah jumlah vote untuk jawaban yang dipilih
         $jawaban = Jawaban::findOrFail($request->jawaban_id);
-        $jawaban->vote += 1;
-        $jawaban->save();;
+        $jawaban->vote += 1; // Tambahkan 1 vote
+        $jawaban->save(); // Simpan perubahan ke database
 
-        //simpan ip_address ke table votes
+        // Simpan IP address ke tabel 'votes' untuk mencegah vote duplikat
         $vote = new Vote;
-        $vote->polling_id = $pollingId;
-        $vote->ip_address = $ipAddress;
-        $vote->save();
+        $vote->polling_id = $pollingId; // Hubungkan vote dengan polling
+        $vote->ip_address = $ipAddress; // Simpan IP address pengguna
+        $vote->save(); // Simpan vote ke database
 
-        //mengambil model polling berdasarkan id, id yang di kirim di form melalui input type hiiden
-        $pollingId = Polling::findOrFail($request->polling_id);
-        return redirect()->route('polling.showStatus', $pollingId->id);
+        // Redirect ke halaman status polling
+        return redirect()->route('polling.showStatus', $pollingId);
     }
 
+
+    // Menampilkan status polling (hasil vote) berdasarkan ID
     public function showStatus($id)
     {
-        $polling = Polling::findOrFail($id);
-        return view('Polling.showStatus', ['polling' => $polling]);
+        $polling = Polling::findOrFail($id); // Ambil polling dari database berdasarkan ID
+        return view('Polling.showStatus', ['polling' => $polling]); // Tampilkan status polling di view
     }
 
+
+    // Menampilkan polling berdasarkan ID
     public function showPolling($id)
     {
-        $polling = Polling::findOrFail($id);
-        return view('Polling.showPolling', ['polling' => $polling]);
+        $polling = Polling::findOrFail($id); // Ambil polling dari database berdasarkan ID
+        return view('Polling.showPolling', ['polling' => $polling]); // Tampilkan polling di view
     }
 
 
+    // Menampilkan polling yang pernah dibuat berdasarkan IP address
     public function pollingTersimpan(Request $request)
     {
-        $ip = $request->ip();
-        // tangkap ip address
-        $polling = Polling::where('ip_address', $ip)->get();
+        $ip = $request->ip(); // Tangkap IP address pengguna
+        $polling = Polling::where('ip_address', $ip)->get(); // Ambil semua polling yang dibuat oleh IP ini
         return view('Polling.pollingTersimpan', [
-            'pollings' => $polling
+            'pollings' => $polling // Tampilkan polling-polling yang tersimpan
         ]);
     }
 
+
+    // Menampilkan halaman "tentang"
     public function tentang()
     {
         return view('polling.tentang');
     }
+    
 
+    // Menghapus polling berdasarkan ID
     public function destroy($id)
     {
-        $polling = Polling::findOrFail($id);
-        $polling->delete();
+        $polling = Polling::findOrFail($id); // Ambil polling dari database berdasarkan ID
+        $polling->delete(); // Hapus polling
         return redirect()->route('polling.pollingTersimpan')->with('success', 'Polling berhasil di hapus.');
     }
 }
