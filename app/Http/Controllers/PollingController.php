@@ -32,7 +32,7 @@ class PollingController extends Controller
         ]);
 
 
-        $maxPolling = 3; // Batas maksimal polling yang bisa dibuat per hari
+        $maxPolling = 10; // Batas maksimal polling yang bisa dibuat per hari
 
         $ipAddress = $request->ip(); // Mendapatkan IP address pengguna
 
@@ -170,13 +170,13 @@ class PollingController extends Controller
     {
         return view('polling.tentang');
     }
-    
+
 
     // Menghapus polling berdasarkan ID
     public function destroy($id)
     {
         $polling = Polling::findOrFail($id); // Ambil polling dari database berdasarkan ID
         $polling->delete(); // Hapus polling
-        return redirect()->route('polling.pollingTersimpan')->with('success', 'Polling berhasil di hapus.');
+        return redirect()->route('polling.pollingTerbaru')->with('success', 'Polling berhasil di hapus.');
     }
 }
