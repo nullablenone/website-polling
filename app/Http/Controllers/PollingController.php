@@ -157,25 +157,36 @@ class PollingController extends Controller
     // Menampilkan polling berdasarkan yang terbaru
     public function pollingTerbaru(Request $request)
     {
-        $polling = Polling::orderBy('created_at', 'desc')->get();
+        // Ambil query pencarian dari input
+        $query = $request->input('query');
+
+        // Cek apakah ada query pencarian
+        if ($query) {
+            // Jika ada, cari polling berdasarkan title
+            $polling = Polling::where('title', 'LIKE', "%{$query}%")
+                ->orderBy('created_at', 'desc')
+                ->get();
+        } else {
+            // Jika tidak ada, ambil semua polling yang diurutkan
+            $polling = Polling::orderBy('created_at', 'desc')->get();
+        }
+
+        // Cek apakah hasil polling ada atau tidak
+        $kondisi = $polling->isEmpty();
+
         return view('Polling.pollingTerbaru', [
-            'pollings' => $polling //kirim polling yang sudah di urutkan
+            'pollings' => $polling,
+            'query' => $query,
+            'kondisi' => $kondisi // Kirim variabel kondisi ke view
         ]);
     }
+
+
 
 
     // Menampilkan halaman "tentang"
     public function tentang()
     {
         return view('polling.tentang');
-    }
-
-
-    // Menghapus polling berdasarkan ID
-    public function destroy($id)
-    {
-        $polling = Polling::findOrFail($id); // Ambil polling dari database berdasarkan ID
-        $polling->delete(); // Hapus polling
-        return redirect()->route('polling.pollingTerbaru')->with('success', 'Polling berhasil di hapus.');
     }
 }
