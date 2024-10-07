@@ -23,15 +23,6 @@
                             class="h4 text-success fw-bold">{{ $polling->title }}</a>
                         <div class="text-muted">Dibuat pada {{ $polling->created_at->format('d-m-Y') }}</div>
                     </div>
-
-                    <!-- Tombol Hapus Polling -->
-                    <form action="{{ route('polling.destroy', $polling->id) }}" method="POST" class="d-inline">
-                        @csrf
-                        @method('DELETE')
-                        <button class="btn btn-outline-danger btn-sm fw-bold shadow-sm" type="submit">
-                            <i class="fa fa-trash"></i> Hapus
-                        </button>
-                    </form>
                 </div>
             </div>
         @endforeach
