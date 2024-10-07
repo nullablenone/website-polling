@@ -154,12 +154,12 @@ class PollingController extends Controller
     }
 
 
-    // Menampilkan polling yang pernah dibuat berdasarkan IP address
+    // Menampilkan polling berdasarkan yang terbaru
     public function pollingTerbaru(Request $request)
     {
         $polling = Polling::orderBy('created_at', 'desc')->get();
         return view('Polling.pollingTerbaru', [
-            'pollings' => $polling // Tampilkan polling-polling yang tersimpan
+            'pollings' => $polling //kirim polling yang sudah di urutkan
         ]);
     }
 
