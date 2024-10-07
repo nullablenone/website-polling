@@ -157,8 +157,7 @@ class PollingController extends Controller
     // Menampilkan polling yang pernah dibuat berdasarkan IP address
     public function pollingTerbaru(Request $request)
     {
-        $ip = $request->ip(); // Tangkap IP address pengguna
-        $polling = Polling::where('ip_address', $ip)->get(); // Ambil semua polling yang dibuat oleh IP ini
+        $polling = Polling::orderBy('created_at', 'desc')->get();
         return view('Polling.pollingTerbaru', [
             'pollings' => $polling // Tampilkan polling-polling yang tersimpan
         ]);
