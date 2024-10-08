@@ -36,7 +36,7 @@
                         <i class="fa fa-pie-chart mr-2 text-light" aria-hidden="true"></i> Lihat Hasil Polling
                     </a>
                     <a class="btn btn-success mx-2 shadow" href="{{ route('polling.pollingTerbaru') }}">
-                        <i class="fa fa-check-circle mr-2 text-light" aria-hidden="true"></i> Polling Tersimpan
+                        <i class="fa fa-check-circle mr-2 text-light" aria-hidden="true"></i> Polling Terbaru
                     </a>
                     <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
@@ -105,10 +105,12 @@
             alamat IP pemilih. Kami tidak mentolerir setiap kecurangan yang dilakukan dan akan menganulir semua suara
             yang berindikasi dilakukan oleh bot.</p>
     </div>
-
     <div class="text-center">
-        <a href="{{ route('polling.create') }}" class="btn btn-danger mt-4 shadow">Buat Polling Anda Sendiri</a>
+        <a href="{{ route('polling.create') }}" class="btn mt-4 shadow" style="background-color: #00BFFF; color: white;">
+            <i class="fas fa-plus"></i> Buat Polling
+        </a>
     </div>
+
     </div>
 
     <!-- JavaScript -->

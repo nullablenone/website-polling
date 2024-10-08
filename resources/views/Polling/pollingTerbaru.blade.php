@@ -24,6 +24,9 @@
         <!-- Cek apakah ada hasil polling -->
         @if ($kondisi && $query)
             <p>Polling dengan judul "<strong>{{ $query }}</strong>" tidak ditemukan.</p>
+            <div class="d-flex justify-content-end">
+                <button onclick="window.history.back()" class="btn btn-outline-success mt-3">Kembali</button>
+            </div>
         @elseif ($kondisi)
             <p>Belum ada polling yang tersedia.</p>
         @else
@@ -33,8 +36,11 @@
                     <div
                         class="card-body d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center p-4">
                         <div class="mb-3 mb-md-0">
-                            <a href="{{ route('polling.show', $polling->id) }}"
-                                class="h4 text-success fw-bold">{{ $polling->title }}</a>
+                            <a href="{{ route('polling.show', $polling->id) }}" class="h4 fw-bold"
+                                style="color: #1E90FF; transition: color 0.3s;" onmouseover="this.style.color='#00BFFF';"
+                                onmouseout="this.style.color='#1E90FF';">
+                                {{ $polling->title }}
+                            </a>
                             <div class="text-muted">Dibuat pada {{ $polling->created_at->format('d m Y') }}</div>
                         </div>
                     </div>
