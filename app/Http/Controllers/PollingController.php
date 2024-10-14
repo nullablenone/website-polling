@@ -32,7 +32,7 @@ class PollingController extends Controller
         ]);
 
 
-        $maxPolling = 10; // Batas maksimal polling yang bisa dibuat per hari
+        $maxPolling = 3; // Batas maksimal polling yang bisa dibuat per hari
 
         $ipAddress = $request->ip(); // Mendapatkan IP address pengguna
 

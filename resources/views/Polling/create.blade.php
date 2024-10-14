@@ -13,14 +13,18 @@
                 <!-- CSRF Token -->
                 @csrf
 
-                <div class="card-header text-center text-white bg-gradient ">
-                    <h1 class="fw-bold">Buat Polling Sendiri</h1>
+                <!-- Section Title -->
+                <div class="section-title text-center mb-5 p-4 text-white rounded shadow-lg">
+                    <h2 class="text-uppercase" style="letter-spacing: 2px;">Buat polling sendiri</h2>
                 </div>
+
+
+
 
                 <div class="card-body p-4">
                     <!-- Input pertanyaan -->
                     <div class="form-group mb-4">
-                        <label for="title"><b>Pertanyaan</b></label>
+                        <label for="title" class="h6">Pertanyaan</label>
                         <textarea name="title" class="form-control @error('title') is-invalid @enderror" id="title" autofocus="on"
                             required maxlength="160" cols="30" rows="2"></textarea>
                         @error('title')
@@ -31,7 +35,7 @@
 
                     <!-- Input pilihan pertama -->
                     <div class="form-group mb-3">
-                        <label for="option1"><b>Ketikan Pilihan Dibawah Ini</b></label>
+                        <label for="option1" class="h6">Ketikan Pilihan Dibawah Ini</label>
                         <input type="text" name="option[]" class="form-control shadow-sm" id="option1" required
                             placeholder="Pilihan" autocomplete="off">
                     </div>

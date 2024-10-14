@@ -4,24 +4,27 @@
     <!-- Content -->
     <div class="container mt-5">
         @if (session('error'))
-            <div class="alert alert-danger">
+            <div class="alert alert-danger shadow-sm rounded-pill text-center">
                 {{ session('error') }}
             </div>
         @endif
 
-        <div class="card shadow-lg">
-
+        <div class="card shadow-sm border-0 rounded-lg overflow-hidden">
+            <!-- Card Header -->
             <div class="card-header text-center text-white">
-                <h1>{{ $polling->title }}</h1>
+                <h2 class="fw-bold">{{ $polling->title }}</h2>
             </div>
 
-            <div class="card-body">
+            <!-- Card Body -->
+            <div class="card-body" style="background-color: #ffffff;">
                 <form action="{{ route('polling.vote', $polling->id) }}" method="POST" id="formVote" class="text-center">
                     @csrf
-                    <p class="fs-5 fw-bold">Klik tombol pilihan Anda</p>
+                    <p class="fs-5 text-muted mb-4">Klik pilihan Anda untuk memberikan suara</p>
                     <div class="d-flex flex-column align-items-center">
                         @foreach ($polling->jawaban as $jawaban)
-                            <label class="btn btn-outline-success mb-2 rounded-2 py-2 shadow w-100 position-relative">
+                            <label
+                                class="btn btn-outline-success mb-3 rounded-pill py-2 px-4 shadow-sm w-100 position-relative"
+                                style="transition: background-color 0.3s;">
                                 <input type="radio" name="jawaban_id" value="{{ $jawaban->id }}" required
                                     style="display: none;">
                                 <span class="fw-bold fs-5">{{ $jawaban->option }}</span>
@@ -31,86 +34,67 @@
                     </div>
                 </form>
 
-                <div class="d-flex justify-content-center mt-4">
-                    <a class="btn btn-primary mx-2 shadow" href="{{ route('polling.showPolling', $polling->id) }}">
-                        <i class="fa fa-pie-chart mr-2 text-light" aria-hidden="true"></i> Lihat Hasil Polling
+                <!-- Actions -->
+                <div class="d-flex justify-content-center mt-4 gap-2">
+                    <a class="btn btn-primary shadow-sm rounded-pill px-4 py-2"
+                        href="{{ route('polling.showPolling', $polling->id) }}">
+                        <i class="fa fa-pie-chart me-2"></i> Lihat Hasil Polling
                     </a>
-                    <a class="btn btn-success mx-2 shadow" href="{{ route('polling.pollingTerbaru') }}">
-                        <i class="fa fa-check-circle mr-2 text-light" aria-hidden="true"></i> Polling Terbaru
+                    <a class="btn btn-success shadow-sm rounded-pill px-4 py-2"
+                        href="{{ route('polling.pollingTerbaru') }}">
+                        <i class="fa fa-check-circle me-2"></i> Polling Terbaru
                     </a>
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        <i class="fa mr-2 fa-share-alt"></i>
-                        Bagikan
+                    <button class="btn btn-secondary dropdown-toggle rounded-pill px-4 py-2 shadow-sm" type="button"
+                        data-bs-toggle="dropdown">
+                        <i class="fa fa-share-alt me-2"></i> Bagikan
                     </button>
 
-
-                    {{-- --------------------------- fungsi share --------------------- --}}
+                    <!-- Dropdown Menu -->
                     <ul class="dropdown-menu">
-
-                        <!-- WhatsApp -->
                         <li>
-                            <a id="whatsappShare" class="dropdown-item d-flex align-items-center" href="#"
-                                style="text-decoration: none;">
-                                <i class="fab fa-whatsapp" style="font-size: 18px; color: #25D366; margin-right: 8px;"></i>
-                                <span>Share via WhatsApp</span>
+                            <a id="whatsappShare" class="dropdown-item d-flex align-items-center" href="#">
+                                <i class="fab fa-whatsapp me-2 text-success"></i> Share via WhatsApp
                             </a>
                         </li>
-
-                        <!-- Telegram -->
                         <li>
-                            <a id="telegramShare" class="dropdown-item d-flex align-items-center" href="#"
-                                style="text-decoration: none;">
-                                <i class="fab fa-telegram-plane"
-                                    style="font-size: 18px; color: #0088cc; margin-right: 8px;"></i>
-                                <span>Share via Telegram</span>
+                            <a id="telegramShare" class="dropdown-item d-flex align-items-center" href="#">
+                                <i class="fab fa-telegram-plane me-2 text-primary"></i> Share via Telegram
                             </a>
                         </li>
-
-                        <!-- Facebook -->
                         <li>
-                            <a id="facebookShare" class="dropdown-item d-flex align-items-center" href="#"
-                                style="text-decoration: none;">
-                                <i class="fab fa-facebook-f"
-                                    style="font-size: 18px; color: #1877F2; margin-right: 8px;"></i>
-                                <span>Share via Facebook</span>
+                            <a id="facebookShare" class="dropdown-item d-flex align-items-center" href="#">
+                                <i class="fab fa-facebook-f me-2 text-info"></i> Share via Facebook
                             </a>
                         </li>
-
-                        <!-- Twitter -->
                         <li>
-                            <a id="twitterShare" class="dropdown-item d-flex align-items-center" href="#"
-                                style="text-decoration: none;">
-                                <i class="fab fa-twitter" style="font-size: 18px; color: #1DA1F2; margin-right: 8px;"></i>
-                                <span>Share via X (Twitter)</span>
+                            <a id="twitterShare" class="dropdown-item d-flex align-items-center" href="#">
+                                <i class="fab fa-twitter me-2 text-info"></i> Share via X (Twitter)
                             </a>
                         </li>
                     </ul>
-
-
-
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="alert alert-info text-center mt-4 card shadow-lg">
-        <h5 class="alert-heading"><strong>TENTANG POLLING INI</strong></h5>
-        <p>Polling tentang <span class="fw-bold"><a href="#"
-                    class="text-info text-decoration-none">{{ $polling->title }}</a></span> dibuat pada <span
-                class="fw-bold">{{ $polling->created_at->format('d-m-Y') }}</span></p>
-        <p>Polling ini memiliki opsi jawaban dan sudah menerima <span class="fw-bold"
-                id="cVote">{{ $polling->jawaban->sum('vote') }}</span> suara.</p>
-        <p class="mb-0">Melakukan pemilihan berulang kali tidak diperbolehkan. Pemeriksaan duplikasi didasarkan pada
-            alamat IP pemilih. Kami tidak mentolerir setiap kecurangan yang dilakukan dan akan menganulir semua suara
-            yang berindikasi dilakukan oleh bot.</p>
-    </div>
-    <div class="text-center">
-        <a href="{{ route('polling.create') }}" class="btn mt-4 shadow" style="background-color: #00BFFF; color: white;">
-            <i class="fas fa-plus"></i> Buat Polling
-        </a>
-    </div>
+        <!-- Polling Info -->
+        <div class="alert alert-info text-center mt-4 card shadow-sm border-0 rounded-lg">
+            <h5 class="alert-heading"><strong>TENTANG POLLING INI</strong></h5>
+            <p>Polling tentang <strong><a href="#" class="text-success">{{ $polling->title }}</a></strong> dibuat pada
+                <strong>{{ $polling->created_at->format('d-m-Y') }}</strong>.
+            </p>
+            <p>Polling ini memiliki opsi jawaban dan sudah menerima <strong>{{ $polling->jawaban->sum('vote') }}</strong>
+                suara.</p>
+            <p>Melakukan pemilihan berulang kali tidak diperbolehkan. Pemeriksaan duplikasi didasarkan pada alamat IP
+                pemilih.</p>
+        </div>
 
+        <!-- Create Poll Button -->
+        <div class="text-center">
+            <a href="{{ route('polling.create') }}" class="btn mt-4 shadow"
+                style="background-color: #00BFFF; color: white;">
+                <i class="fas fa-plus"></i> Buat Polling
+            </a>
+        </div>
     </div>
 
     <!-- JavaScript -->
@@ -120,9 +104,6 @@
                 document.getElementById('formVote').submit();
             });
         });
-
-
-
 
         // ------------------------ fungsi share -----------------------------
 

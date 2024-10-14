@@ -21,19 +21,17 @@
             </div>
         </div>
 
-        <div class="alert alert-info text-center mt-4 card shadow">
+        <!-- Polling Info -->
+        <div class="alert alert-info text-center mt-4 card shadow-sm border-0 rounded-lg">
             <h5 class="alert-heading"><strong>TENTANG POLLING INI</strong></h5>
-            <p>Polling tentang <span class="fw-bold"><a href="#"
-                        class="text-info text-decoration-none">{{ $polling->title }}</a></span> dibuat pada <span
-                    class="fw-bold">{{ $polling->created_at->format('d-m-Y') }}</span></p>
-            <p>Polling ini memiliki opsi jawaban dan sudah menerima <span class="fw-bold"
-                    id="cVote">{{ $polling->jawaban->sum('vote') }}</span> suara.</p>
-            <hr>
-            <p class="mb-0">Melakukan pemilihan berulang kali tidak diperbolehkan. Pemeriksaan duplikasi didasarkan pada
-                alamat IP pemilih. Kami tidak mentolerir setiap kecurangan yang dilakukan dan akan menganulir semua suara
-                yang berindikasi dilakukan oleh bot.</p>
+            <p>Polling tentang <strong><a href="#" class="text-success">{{ $polling->title }}</a></strong> dibuat pada
+                <strong>{{ $polling->created_at->format('d-m-Y') }}</strong>.
+            </p>
+            <p>Polling ini memiliki opsi jawaban dan sudah menerima <strong>{{ $polling->jawaban->sum('vote') }}</strong>
+                suara.</p>
+            <p>Melakukan pemilihan berulang kali tidak diperbolehkan. Pemeriksaan duplikasi didasarkan pada alamat IP
+                pemilih.</p>
         </div>
-
         <div class="text-center">
             <a href="{{ route('polling.create') }}" class="btn mt-4 shadow"
                 style="background-color: #00BFFF; color: white;">

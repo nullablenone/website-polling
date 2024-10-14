@@ -41,16 +41,33 @@
 <body class="index-page">
 
     <header id="header" class="header fixed-top">
-        <div class=" d-flex align-items-center">
+        <div class="topbar d-flex align-items-center">
+            <div class="container d-flex justify-content-center justify-content-md-between">
+                <div class="contact-info d-flex align-items-center">
+                    <i class="bi bi-envelope d-flex align-items-center">
+                        <a href="mailto:useryesa9@gmail.com">useryesa9@gmail.com</a>
+                    </i>
+                    <i class="bi bi-phone d-flex align-items-center ms-4"><span>+62 858-1011-6384</span></i>
+                </div>
+                <div class="social-links d-none d-md-flex align-items-center">
+                    <a href="https://www.instagram.com/nullablenone/" class="instagram"><i
+                            class="bi bi-instagram"></i></a>
+                    <a href="https://www.linkedin.com/in/muhamad-yesa/" class="linkedin"><i
+                            class="bi bi-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="branding d-flex align-items-center">
             <div class="container position-relative d-flex align-items-center justify-content-between">
                 <a href="{{ route('polling.create') }}" class="logo d-flex align-items-center">
-                    <h1 class="sitename">GrahaTeknologi</h1>
+                    <h1 class="sitename">ngepolling</h1>
                 </a>
 
                 <nav id="navmenu" class="navmenu">
                     <ul>
                         <li><a href="{{ route('polling.create') }}" class="nav-link">Beranda<br></a></li>
                         <li><a href="{{ route('polling.tentang') }}" class="nav-link">Tentang</a></li>
+                        <li><a href="{{ route('polling.create') }}" class="nav-link">Buat Polling</a></li>
                         <li><a href="{{ route('polling.pollingTerbaru') }}" class="nav-link">Polling Terbaru</a></li>
                     </ul>
                     <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
@@ -64,16 +81,56 @@
     <main class="main">
         <br>
         <br>
+        <br>
+        <br>
         @yield('content')
-
     </main>
+    <br>
+    <br>
+    <br>
 
     <footer id="footer" class="footer accent-background">
 
+        <div class="container footer-top">
+            <div class="row gy-4 justify-content-between">
+                <div class="col-lg-5 col-md-12 footer-about">
+                    <a href="{{ route('polling.create') }}" class="logo d-flex align-items-center">
+                        <span class="sitename">ngepolling</span>
+                    </a>
+                    <p>Website polling ini dirancang untuk memudahkan pengguna dalam memberikan suara dan berpartisipasi
+                        dalam berbagai polling.</p>
+                    <div class="social-links d-flex mt-4">
+                        <a href="https://www.instagram.com/nullablenone/"><i class="bi bi-instagram"></i></a>
+                        <a href="https://www.linkedin.com/in/muhamad-yesa/"><i class="bi bi-linkedin"></i></a>
+                    </div>
+                </div>
+
+
+                <div class="col-lg-2 col-6 footer-links">
+                    <h4>Link Cepat</h4>
+                    <ul>
+                        <li><a href="{{ route('polling.create') }}">Beranda</a></li>
+                        <li><a href="{{ route('polling.tentang') }}">Tentang</a></li>
+                        <li><a href="{{ route('polling.create') }}">Buat Polling</a></li>
+                        <li><a href="{{ route('polling.pollingTerbaru') }}">Polling Terbaru</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
+                    <h4>Kontak</h4>
+                    <p class="mt-4"><strong>Phone:</strong> <span>+62 858-1011-6384</span></p>
+                    <p><strong>Email:</strong> <span>useryesa9@gmail.com</span></p>
+                </div>
+
+            </div>
+        </div>
+
         <div class="container copyright text-center mt-4">
-            <p>© <span>Copyright</span> <strong class="px-1 sitename">Yesa</strong> <span>All Rights Reserved</span>
+            <p>© <span>Copyright</span> <strong class="px-1 sitename">nullablenone</strong> <span>All Rights
+                    Reserved</span>
             </p>
             <div class="credits">
+                Designed by <a href="https://bootstrapmade.com/">nullablenone</a>
             </div>
         </div>
 
