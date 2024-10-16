@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('pollings', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('ip_address'); // Simpan alamat IP
             $table->timestamps();
         });
     }

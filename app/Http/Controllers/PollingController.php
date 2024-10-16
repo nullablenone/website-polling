@@ -73,7 +73,6 @@ class PollingController extends Controller
         // Membuat polling baru dan menyimpan ke database
         $polling = new Polling;
         $polling->title = $request->title; // Set title polling
-        $polling->ip_address = $ipAddress; // Simpan IP address pembuat polling
         $polling->save(); // Simpan polling ke database
 
 
