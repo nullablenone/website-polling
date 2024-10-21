@@ -69,6 +69,24 @@
                         <li><a href="{{ route('polling.tentang') }}" class="nav-link">Tentang</a></li>
                         <li><a href="{{ route('polling.create') }}" class="nav-link">Buat Polling</a></li>
                         <li><a href="{{ route('polling.pollingTerbaru') }}" class="nav-link">Polling Terbaru</a></li>
+                        @auth
+                            <!-- Jika user sudah login, tampilkan tombol Logout -->
+                            <li>
+                                <a href="#" class="nav-link"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    Log Out
+                                </a>
+                            </li>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
+                        @endauth
+
+                        @guest
+                            <!-- Jika user belum login, tampilkan tombol Login -->
+                            <li><a href="{{ route('login') }}" class="nav-link">Login</a></li>
+                        @endguest
+
                     </ul>
                     <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
                 </nav>
