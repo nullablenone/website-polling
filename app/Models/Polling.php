@@ -14,4 +14,8 @@ class Polling extends Model
         return $this->hasMany(Jawaban::class);
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
