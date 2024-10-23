@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('batas_pollings', function (Blueprint $table) {
             $table->id();
+            $table->string('user_id');
             $table->string('ip_address')->unique(); // Simpan alamat IP
             $table->integer('jumlah_polling')->default(0);
-            $table->date('tanggal_polling')->nullable();
             $table->timestamps();
         });
     }
