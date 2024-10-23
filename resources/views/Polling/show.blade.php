@@ -21,16 +21,39 @@
                     @csrf
                     <p class="fs-5 text-muted mb-4">Klik pilihan Anda untuk memberikan suara</p>
                     <div class="d-flex flex-column align-items-center">
-                        @foreach ($polling->jawaban as $jawaban)
-                            <label
-                                class="btn btn-outline-success mb-3 rounded-pill py-2 px-4 shadow-sm w-100 position-relative"
-                                style="transition: background-color 0.3s;">
-                                <input type="radio" name="jawaban_id" value="{{ $jawaban->id }}" required
-                                    style="display: none;">
-                                <span class="fw-bold fs-5">{{ $jawaban->option }}</span>
-                                <input type="hidden" value="{{ $polling->id }}" name="polling_id">
-                            </label>
-                        @endforeach
+
+                        @if ($polling->is_foto != true)
+                            @foreach ($polling->jawaban as $jawaban)
+                                <label
+                                    class="btn btn-outline-success mb-3 rounded-pill py-2 px-4 shadow-sm w-100 position-relative"
+                                    style="transition: background-color 0.3s;">
+
+                                    <input type="radio" name="jawaban_id" value="{{ $jawaban->id }}" required
+                                        style="display: none;">
+                                    <span class="fw-bold fs-5">{{ $jawaban->option }}</span>
+
+                                    <input type="hidden" value="{{ $polling->id }}" name="polling_id">
+                                </label>
+                            @endforeach
+                        @else
+                            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 justify-content-center my-4 ">
+                                @foreach ($polling->jawaban as $jawaban)
+                                    <div class="col">
+                                        <label class="btn position-relative w-100"
+                                            style="transition: background-color 0.3s;">
+                                            <input type="radio" name="jawaban_id" value="{{ $jawaban->id }}" required
+                                                style="display: none;">
+                                            <img src="{{ asset($jawaban->option) }}" alt="Pilihan Foto"
+                                                class="img-fluid shadow-sm"
+                                                style="width: 100%; height: 300px; object-fit: cover; border-radius: 10px;">
+                                            <input type="hidden" value="{{ $polling->id }}" name="polling_id">
+                                        </label>
+                                    </div>
+                                @endforeach
+                            </div>
+
+                        @endif
+
                     </div>
                 </form>
 
@@ -79,7 +102,8 @@
         <!-- Polling Info -->
         <div class="alert alert-info text-center mt-4 card shadow-sm border-0 rounded-lg">
             <h5 class="alert-heading"><strong>TENTANG POLLING INI</strong></h5>
-            <p>Polling tentang <strong><a href="#" class="text-success">{{ $polling->title }}</a></strong> dibuat pada
+            <p>Polling tentang <strong><a href="#" class="text-success">{{ $polling->title }}</a></strong> dibuat
+                pada
                 <strong>{{ $polling->created_at->format('d-m-Y') }}</strong>.
             </p>
             <p>Polling ini memiliki opsi jawaban dan sudah menerima <strong>{{ $polling->jawaban->sum('vote') }}</strong>

@@ -27,6 +27,11 @@ class PollingController extends Controller
         return view('Polling.create');
     }
 
+    public function pollingFoto()
+    {
+        return view("Polling.polling-foto");
+    }
+
 
     // Menyimpan polling baru ke database
     public function store(Request $request)
@@ -89,6 +94,76 @@ class PollingController extends Controller
         }
 
         return redirect()->route('polling.show', $polling->id);
+    }
+
+
+    public function storeFotoPolling(Request $request)
+    {
+        // Validasi input dari form polling foto
+        $validated = $request->validate([
+            'title' => 'required|min:5',
+            'option' => 'required|array',
+            'option.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // validasi untuk foto
+        ]);
+
+        $maxPolling = 3;
+        $user = Auth::user();
+        $ipAddress = $request->ip();
+
+        // Cek apakah user ini sudah bikin polling melebihi batas
+        $pollingCount = Polling::where('user_id', $user->id)->count();
+
+        if ($pollingCount >= $maxPolling) {
+            return back()->with('error', 'Anda telah mencapai batas maksimal polling untuk akun ini.');
+        }
+
+        // Cek apakah sudah ada entry di BatasPolling untuk kombinasi user_id dan ip_address
+        $ipTracking = BatasPolling::where('ip_address', $ipAddress)->where('user_id', $user->id)->first();
+
+        // Jika ada, cek apakah sudah mencapai batas polling berdasarkan IP
+        if ($ipTracking && $ipTracking->jumlah_polling >= $maxPolling) {
+            return back()->with('error', 'Anda telah mencapai batas polling dari IP ini.');
+        }
+
+        // Update atau buat entry baru di BatasPolling
+        if ($ipTracking) {
+            $ipTracking->jumlah_polling++;
+            $ipTracking->save();
+        } else {
+            try {
+                // Jika belum ada entry, buat entry baru dengan kombinasi user_id dan ip_address
+                $ipTracking = new BatasPolling;
+                $ipTracking->ip_address = $ipAddress;
+                $ipTracking->user_id = $user->id;
+                $ipTracking->jumlah_polling = 1;
+                $ipTracking->save();
+            } catch (\Exception $e) {
+                return back()->with('error', 'Jangan Spam Bang !');
+            }
+        }
+
+
+        // Simpan polling baru
+        $polling = new Polling;
+        $polling->title = $request->title;
+        $polling->user_id = $user->id;
+        $polling->is_foto = true;
+        $polling->save();
+
+        // Simpan opsi/jawaban berupa foto
+        foreach ($request->option as $photo) {
+            // Proses upload foto
+            $photoName = time() . '_' . $photo->getClientOriginalName();
+            $photo->move(public_path('uploads'), $photoName); // Simpan di folder uploads
+
+            // Simpan path foto di database
+            $jawaban = new Jawaban;
+            $jawaban->polling_id = $polling->id;
+            $jawaban->option = 'uploads/' . $photoName; // Path foto yang disimpan
+            $jawaban->save();
+        }
+
+        return redirect()->route('polling.show', $polling->id)->with('success', 'Polling foto berhasil dibuat!');
     }
 
 

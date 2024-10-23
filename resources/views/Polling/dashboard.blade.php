@@ -10,7 +10,7 @@
                         </div>
                         <div class="text-right mb-3">
                             <a href="{{ route('polling.create') }}" class="btn btn-primary">BUAT POLLING BIASA</a>
-                            <a href="#" class="btn btn-warning">BUAT POLLING PREMIUM</a>
+                            <a href="{{ route('polling.pollingFoto') }}" class="btn btn-warning text-white">BUAT POLLING FOTO</a>
                         </div>
 
                         <div class="card border-success shadow-sm">

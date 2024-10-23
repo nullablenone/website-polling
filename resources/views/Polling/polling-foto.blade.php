@@ -8,7 +8,8 @@
             </div>
         @endif
         <!-- Form untuk polling -->
-        <form id="pollingForm" class="form mt-5" action="{{ route('polling.store') }}" method="POST">
+        <form id="pollingForm" class="form mt-5" action="{{ route('polling.storePollingFoto') }}" method="POST"
+            enctype="multipart/form-data">
             <div class="card shadow-lg border-0 rounded">
                 <!-- CSRF Token -->
                 @csrf
@@ -36,13 +37,13 @@
                     <!-- Input pilihan pertama -->
                     <div class="form-group mb-3">
                         <label for="option1" class="h6">Ketikan Pilihan Dibawah Ini</label>
-                        <input type="text" name="option[]" class="form-control shadow-sm" id="option1" required
+                        <input type="file" name="option[]" class="form-control shadow-sm" id="option1" required
                             placeholder="Pilihan" autocomplete="off">
                     </div>
 
                     <!-- Input pilihan kedua -->
                     <div class="form-group mb-3">
-                        <input type="text" name="option[]" class="form-control shadow-sm" id="option2" required
+                        <input type="file" name="option[]" class="form-control shadow-sm" id="option2" required
                             placeholder="Pilihan" autocomplete="off">
                     </div>
 
@@ -65,10 +66,6 @@
                 <div class="alert alert-warning my-4 text-center">
                     <b>Perhatian:</b> Dilarang membuat Polling yang berbau Provokasi, Radikalisme, dan SARA
                 </div>
-                <a href="{{ route('polling.pollingFoto') }}"
-                    class="btn btn-primary shadow-sm rounded-pill px-4 py-2 align-items-center fw-bold">
-                    <i class="fas fa-plus me-2"></i> Buat Polling Foto
-                </a>
             </div>
         </form>
     </div>
@@ -98,7 +95,7 @@
                 const newOption = `
             <div class="form-group mb-3" id="option${optionCount}Wrapper">
                 <div class="input-group shadow-sm">
-                    <input type="text" name="option[]" class="form-control" id="option${optionCount}" required placeholder="Pilihan" autocomplete="off">
+                    <input type="file" name="option[]" class="form-control" id="option${optionCount}" required placeholder="Pilihan" autocomplete="off">
                     <div class="input-group-append">
                         <button type="button" class="btn btn-outline-danger" onclick="removeOption(${optionCount})">
                             <i class="fa fa-trash"></i>

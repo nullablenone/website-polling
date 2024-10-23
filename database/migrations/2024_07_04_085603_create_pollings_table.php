@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('title');
             $table->boolean('ditutup')->default(false);
+            $table->boolean('is_foto')->default(false);
             $table->timestamps();
         });
     }
