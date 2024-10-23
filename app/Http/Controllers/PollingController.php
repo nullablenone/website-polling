@@ -187,4 +187,21 @@ class PollingController extends Controller
     {
         return view('polling.tentang');
     }
+
+
+    public function hapus($id)
+    {
+        $polling = Polling::findOrFail($id); // Cari polling berdasarkan ID
+
+        // Pastikan hanya user yang membuat polling atau admin yang bisa menghapusnya
+        if (Auth::id() !== $polling->user_id) {
+            return redirect()->back()->with('error', 'Anda tidak memiliki izin untuk menghapus polling ini.');
+        }
+
+        // Hapus polling dan semua jawaban yang terkait
+        $polling->jawaban()->delete(); // Jika ada jawaban terkait, hapus dulu
+        $polling->delete(); // Hapus polling
+
+        return redirect()->back()->with('success', 'Polling berhasil dihapus.');
+    }
 }

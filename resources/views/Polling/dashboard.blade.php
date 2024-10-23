@@ -12,8 +12,20 @@
                             <a href="{{ route('polling.create') }}" class="btn btn-primary">BUAT POLLING BIASA</a>
                             <a href="#" class="btn btn-warning">BUAT POLLING PREMIUM</a>
                         </div>
+
                         <div class="card border-success shadow-sm">
+
                             <div class="card-body">
+
+                                @if (session('success'))
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        {{ session('success') }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                @endif
+
                                 @foreach ($pollings as $polling)
                                     <div class="card mb-4 polling-item border-0 shadow-sm rounded-lg">
                                         <div
@@ -30,7 +42,14 @@
                                             </div>
                                             <div class="mt-3 text-center">
                                                 <a href="#" class="btn btn-sm btn-outline-info mr-2">Tutup</a>
-                                                <a href="#" class="btn btn-sm btn-outline-danger">Hapus</a>
+                                                
+                                                <form action="{{ route('polling.hapus', $polling->id) }}" method="POST"
+                                                    class="d-inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger"
+                                                        onclick="return confirm('Apakah Anda yakin ingin menghapus polling ini?');">Hapus</button>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
