@@ -41,8 +41,10 @@
                                                     {{ $polling->created_at->format('d m Y') }}</div>
                                             </div>
                                             <div class="mt-3 text-center">
-                                                <a href="#" class="btn btn-sm btn-outline-info mr-2">Tutup</a>
-                                                
+
+                                                <a href="{{ route('polling.tutup', $polling->id) }}"
+                                                    class="btn btn-sm btn-outline-info mr-2">Tutup</a>
+
                                                 <form action="{{ route('polling.hapus', $polling->id) }}" method="POST"
                                                     class="d-inline">
                                                     @csrf

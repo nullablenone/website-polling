@@ -46,26 +46,32 @@ class PollingController extends Controller
         $pollingCount = Polling::where('user_id', $user->id)->count();
 
         if ($pollingCount >= $maxPolling) {
-            return back()->with('error', 'Anda telah mencapai batas maksimal polling.');
+            return back()->with('error', 'Anda telah mencapai batas maksimal polling untuk akun ini.');
         }
 
-        // Cek apakah ada polling dari IP yang sama
+        // Cek apakah sudah ada entry di BatasPolling untuk kombinasi user_id dan ip_address
         $ipTracking = BatasPolling::where('ip_address', $ipAddress)->where('user_id', $user->id)->first();
 
+        // Jika ada, cek apakah sudah mencapai batas polling berdasarkan IP
         if ($ipTracking && $ipTracking->jumlah_polling >= $maxPolling) {
             return back()->with('error', 'Anda telah mencapai batas polling dari IP ini.');
         }
 
-        // Update atau buat entry IP baru
+        // Update atau buat entry baru di BatasPolling
         if ($ipTracking) {
             $ipTracking->jumlah_polling++;
             $ipTracking->save();
         } else {
-            $ipTracking = new BatasPolling;
-            $ipTracking->ip_address = $ipAddress;
-            $ipTracking->user_id = $user->id;
-            $ipTracking->jumlah_polling = 1;
-            $ipTracking->save();
+            try {
+                // Jika belum ada entry, buat entry baru dengan kombinasi user_id dan ip_address
+                $ipTracking = new BatasPolling;
+                $ipTracking->ip_address = $ipAddress;
+                $ipTracking->user_id = $user->id;
+                $ipTracking->jumlah_polling = 1;
+                $ipTracking->save();
+            } catch (\Exception $e) {
+                return back()->with('error', 'Jangan Spam Bang !');
+            }
         }
 
         // Simpan polling baru
@@ -88,12 +94,17 @@ class PollingController extends Controller
 
 
 
+
     // Menampilkan detail polling berdasarkan ID
     public function show(string $id)
     {
-        $polling = Polling::findOrFail($id); // Ambil polling dari database berdasarkan ID
+        $polling = Polling::findOrFail($id);
 
-        return view('Polling.show', ['polling' => $polling]); // Tampilkan polling di view
+        if ($polling->ditutup) {
+            return redirect()->route('polling.create')->with('error', 'Polling ini sudah ditutup dan tidak bisa diakses.');
+        }
+
+        return view('Polling.show', ['polling' => $polling]);
     }
 
 
@@ -166,7 +177,9 @@ class PollingController extends Controller
                 ->get();
         } else {
             // Jika tidak ada, ambil semua polling yang diurutkan
-            $polling = Polling::orderBy('created_at', 'desc')->get();
+            $polling = Polling::where('ditutup', false)
+                ->orderBy('created_at', 'desc')
+                ->get();
         }
 
         // Cek apakah hasil polling ada atau tidak
@@ -203,5 +216,28 @@ class PollingController extends Controller
         $polling->delete(); // Hapus polling
 
         return redirect()->back()->with('success', 'Polling berhasil dihapus.');
+    }
+
+    public function tutup($id)
+    {
+        $polling = Polling::findOrFail($id);
+
+        // Pastikan user yang menutup adalah pembuat polling
+        if (Auth::id() !== $polling->user_id) {
+            return redirect()->back()->with('error', 'Anda tidak memiliki izin untuk menutup polling ini.');
+        }
+
+        // Tutup Buka polling
+        if ($polling->ditutup == true) {
+            $polling->ditutup = false;
+            $polling->save();
+            session()->flash('success', 'Polling berhasil dibuka kembali.');
+        } else {
+            $polling->ditutup = true;
+            $polling->save();
+            session()->flash('success', 'Polling berhasil ditutup.');
+        }
+
+        return redirect()->back();
     }
 }

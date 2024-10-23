@@ -22,4 +22,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/show-polling/{polling}', [PollingController::class, 'showPolling'])->name('polling.showPolling');
     Route::get('/polling/polling-terbaru', [PollingController::class, 'pollingTerbaru'])->name('polling.pollingTerbaru');
     Route::delete('/dashboard/{id}/hapus', [PollingController::class, 'hapus'])->name('polling.hapus');
+    Route::get('/dashboard/{id}/tutup', [PollingController::class, 'tutup'])->name('polling.tutup');
 });
