@@ -7,12 +7,19 @@ use App\Models\Jawaban;
 use App\Models\Polling;
 use App\Models\BatasPolling;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use Illuminate\Routing\Controller;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Auth;
 
 class PollingController extends Controller
 {
+
+    public function dashboard()
+    {
+        $user = Auth::user();
+        $pollings = $user->polling;
+        return view('Polling.dashboard', ['pollings' => $pollings]);
+    }
 
     // Menampilkan form untuk membuat polling baru
     public function create()

@@ -12,6 +12,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/', [PollingController::class, 'create'])->name('polling.create');
     Route::get('/tentang', [PollingController::class, 'tentang'])->name('polling.tentang');
+    Route::get('/dashboard', [PollingController::class, 'dashboard'])->name('polling.dashboard');
 
     // Route Utama
     Route::get('/{polling}', [PollingController::class, 'show'])->name('polling.show');

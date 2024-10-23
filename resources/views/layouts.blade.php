@@ -69,6 +69,7 @@
                         <li><a href="{{ route('polling.tentang') }}" class="nav-link">Tentang</a></li>
                         <li><a href="{{ route('polling.create') }}" class="nav-link">Buat Polling</a></li>
                         <li><a href="{{ route('polling.pollingTerbaru') }}" class="nav-link">Polling Terbaru</a></li>
+                        <li><a href="{{ route('polling.dashboard') }}" class="nav-link">Dashboard</a></li>
                         @auth
                             <!-- Jika user sudah login, tampilkan tombol Logout -->
                             <li>
