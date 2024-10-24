@@ -22,7 +22,7 @@
         rel="stylesheet" />
 
     <!-- Icons. Uncomment required icon fonts -->
-    <link rel="stylesheet" href="{{ asset('assets1/vendor/fonts/boxicons.css') }}" />
+    <link rel="icon" href="{{ asset('assets/images/graha.png') }}" type="image/x-icon">
 
     <!-- Core CSS -->
     <link rel="stylesheet" href="{{ asset('assets1/vendor/css/core.css') }}" class="template-customizer-core-css" />
