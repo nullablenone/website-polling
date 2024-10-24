@@ -36,22 +36,24 @@
                                 </label>
                             @endforeach
                         @else
-                            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 justify-content-center my-4 ">
+                            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 justify-content-center">
                                 @foreach ($polling->jawaban as $jawaban)
-                                    <div class="col">
-                                        <label class="btn position-relative w-100"
-                                            style="transition: background-color 0.3s;">
+                                    <div class="col my-5">
+                                        <label class="btn position-relative w-100 p-0"
+                                            style="transition: background-color 0.3s; cursor: pointer;">
                                             <input type="radio" name="jawaban_id" value="{{ $jawaban->id }}" required
                                                 style="display: none;">
+
+                                            <!-- Foto Pilihan -->
                                             <img src="{{ asset($jawaban->option) }}" alt="Pilihan Foto"
-                                                class="img-fluid shadow-sm"
-                                                style="width: 100%; height: 300px; object-fit: cover; border-radius: 10px;">
+                                                class="img-fluid shadow-sm polling-option shadow-lg"
+                                                style="width: 100%; height: 300px; object-fit: cover; border-radius: 10px; transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;">
+
                                             <input type="hidden" value="{{ $polling->id }}" name="polling_id">
                                         </label>
                                     </div>
                                 @endforeach
                             </div>
-
                         @endif
 
                     </div>
@@ -172,5 +174,25 @@
         const twitterShare = document.getElementById('twitterShare');
         twitterShare.href =
             `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent('http://website-polling.test:8080/{{ $polling->id }}')}`;
+
+
+        document.querySelectorAll('.polling-option').forEach(option => {
+            option.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.05)';
+                this.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.2)';
+            });
+
+            option.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
+                this.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)';
+            });
+
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.polling-option').forEach(el => {
+                    el.style.border = 'none';
+                });
+                this.style.border = '3px solid #00BFFF'; // Menambahkan border saat dipilih
+            });
+        });
     </script>
 @endsection
