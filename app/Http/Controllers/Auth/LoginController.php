@@ -26,7 +26,16 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+
+    protected function authenticated($request, $user)
+    {
+        // Contoh logika: cek role atau permission
+        if (!$user->hasRole('admin')) {
+            return redirect()->route('polling.create');
+        }
+        return redirect()->route('admin.index');
+    }
+
 
     /**
      * Create a new controller instance.
