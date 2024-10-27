@@ -1,4 +1,5 @@
 @extends('admin-layouts')
+@section('title', 'Dashboard')
 @section('content')
     <div class="col-lg-8 mb-4 order-0">
         <div class="card">

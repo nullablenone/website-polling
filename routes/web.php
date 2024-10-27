@@ -10,8 +10,9 @@ use App\Http\Controllers\PollingController;
 Auth::routes();
 
 // route buat admin
-Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/admin-dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+Route::middleware(['auth', 'role:admin'])->prefix('admin-dashboard')->group(function () {
+    Route::get('/', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/statistik', [AdminController::class, 'statistik'])->name('admin.statistik');
 });
 
 // route polling
