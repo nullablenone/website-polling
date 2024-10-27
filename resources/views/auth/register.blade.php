@@ -16,7 +16,7 @@
                 <div class="mb-3">
                     <label for="username" class="form-label" style="color: #008374">Username</label>
                     <input type="text" class="form-control" id="username" name="name" placeholder="Masukan username"
-                        autofocus value="{{ old('name') }}">
+                        autofocus value="{{ old('name') }}" autocomplete="off">
                     @error('name')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -26,7 +26,7 @@
                 <div class="mb-3">
                     <label for="email" class="form-label" style="color: #008374">Email</label>
                     <input type="email" class="form-control" id="email" name="email" placeholder="Masukan email mu"
-                        value="{{ old('email') }}">
+                        value="{{ old('email') }}" autocomplete="off">
                     @error('email')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -37,7 +37,7 @@
                     <label class="form-label" for="password" style="color: #008374">Password</label>
                     <div class="input-group input-group-merge">
                         <input type="password" id="password" class="form-control" name="password"
-                            placeholder="············" value="{{ old('password') }}">
+                            placeholder="············" value="{{ old('password') }}" autocomplete="off">
                         <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                     </div>
                     @error('password')
@@ -50,7 +50,7 @@
                     <label class="form-label" for="password-confirm" style="color: #008374">Konfirmasi Password</label>
                     <div class="input-group input-group-merge">
                         <input type="password" id="password-confirm" class="form-control" name="password_confirmation"
-                            placeholder="············" value="{{ old('password_confirmation') }}">
+                            placeholder="············" value="{{ old('password_confirmation') }}" autocomplete="off">
                         <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                     </div>
                 </div>
