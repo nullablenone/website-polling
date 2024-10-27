@@ -13,7 +13,7 @@ Auth::routes();
 Route::middleware(['auth', 'role:admin'])->prefix('admin-dashboard')->group(function () {
     Route::get('/', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/statistik', [AdminController::class, 'statistik'])->name('admin.statistik');
-    Route::delete('/dashboard/{id}/hapus', [AdminController::class, 'hapus'])->name('admin.hapus');
+    Route::delete('/{id}/hapus', [AdminController::class, 'hapus'])->name('admin.hapus');
 });
 
 // route polling
