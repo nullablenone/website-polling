@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Polling;
 use App\Models\BatasPolling;
 use Illuminate\Http\Request;
 
@@ -13,7 +14,13 @@ class AdminController extends Controller
      */
     public function dashboard()
     {
-        return view('Admin.dashboard');
+        $user = User::whereDoesntHave('roles', function ($query) {
+            $query->where('name', 'admin');
+        })->count();
+
+        $polling = Polling::count();
+
+        return view('Admin.dashboard', compact('user', 'polling'));
     }
 
     /**
