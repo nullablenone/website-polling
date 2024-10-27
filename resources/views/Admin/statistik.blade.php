@@ -5,6 +5,13 @@
 
     <div class="card">
         <h5 class="card-header">Statistik User</h5>
+
+        @if (session('success'))
+            <div class="alert alert-success" role="alert">
+                {{ session('success') }}
+            </div>
+        @endif
+
         <div class="table-responsive text-nowrap">
             <table class="table table-hover">
                 <thead>
@@ -34,8 +41,14 @@
                                         <a class="dropdown-item" href="javascript:void(0);"><i
                                                 class="bx bx-edit-alt me-1"></i>
                                             Edit</a>
-                                        <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i>
-                                            Delete</a>
+                                        <form action="{{ route('admin.hapus', $user->id) }}" method="POST"
+                                            onsubmit="return confirm('Yakin ingin menghapus user ini?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="dropdown-item">
+                                                <i class="bx bx-trash me-1"></i> Hapus
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
                             </td>
