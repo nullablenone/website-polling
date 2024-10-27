@@ -43,12 +43,12 @@ class PollingController extends Controller
             'option.*' => 'required|string',
         ]);
 
-        $maxPolling = 3; // Batas maksimal polling per user
+        $maxPolling = 1; // Batas maksimal polling per user
         $user = Auth::user(); // Ambil user yang lagi login
         $ipAddress = $request->ip(); // Ambil IP address user
 
         // Cek apakah user ini sudah bikin polling melebihi batas
-        $pollingCount = Polling::where('user_id', $user->id)->count();
+        $pollingCount = BatasPolling::sum('jumlah_polling');
 
         if ($pollingCount >= $maxPolling) {
             return back()->with('error', 'Anda telah mencapai batas maksimal polling untuk akun ini.');
@@ -75,7 +75,7 @@ class PollingController extends Controller
                 $ipTracking->jumlah_polling = 1;
                 $ipTracking->save();
             } catch (\Exception $e) {
-                return back()->with('error', 'Jangan Spam Bang !');
+                return back()->with('error', 'Kamu terdekesi melakukan spam Akun!');
             }
         }
 
