@@ -21,7 +21,7 @@ class AdminController extends Controller
      */
     public function statistik()
     {
-        $filteredUsers = User::select('id', 'email')->get()->filter(fn($user) => !$user->hasRole('admin'));
+        $filteredUsers = User::select('id', 'email', 'ip_address')->get()->filter(fn($user) => !$user->hasRole('admin'));
         $batas_polling = BatasPolling::select('jumlah_polling')->get();
 
         return view('Admin.statistik', compact('filteredUsers', 'batas_polling'));

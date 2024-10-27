@@ -11,6 +11,7 @@
                     <tr>
                         <th>Id</th>
                         <th>Email</th>
+                        <th>ip address</th>
                         <th>Total Polling</th>
                         <th>Actions</th>
                     </tr>
@@ -21,6 +22,7 @@
                         <tr>
                             <td>{{ $user->id }}</td>
                             <td>{{ $user->email }}</td>
+                            <td>{{ $user->ip_address }}</td>
                             <td>{{ $batas ? $batas->jumlah_polling : 0 }}</td>
                             <td>
                                 <div class="dropdown">
