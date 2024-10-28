@@ -66,8 +66,8 @@
                     <b>Perhatian:</b> Dilarang membuat Polling yang berbau Provokasi, Radikalisme, dan SARA
                 </div>
                 <a href="{{ route('polling.pollingFoto') }}"
-                    class="btn btn-primary shadow-sm rounded-pill px-4 py-2 align-items-center fw-bold">
-                    <i class="fas fa-plus me-2"></i> Buat Polling Foto
+                    class="btn shadow-sm px-4 py-2 align-items-center fw-bold text-white" style="background: #008374">
+                    <i class="fas fa-plus me-2 text-white"></i> Buat Polling Foto
                 </a>
             </div>
         </form>
