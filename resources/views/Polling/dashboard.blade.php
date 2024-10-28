@@ -10,12 +10,13 @@
                         </div>
                         <div class="text-right mb-3">
                             <a href="{{ route('polling.create') }}" class="btn btn-primary">BUAT POLLING BIASA</a>
-                            <a href="{{ route('polling.pollingFoto') }}" class="btn btn-warning text-white">BUAT POLLING FOTO</a>
+                            <a href="{{ route('polling.pollingFoto') }}" class="btn btn-warning text-white">BUAT POLLING
+                                FOTO</a>
                         </div>
 
                         <div class="card border-success shadow-sm">
 
-                            <div class="card-body">
+                            <div class="clard-body">
 
                                 @if (session('success'))
                                     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -41,16 +42,16 @@
                                                     {{ $polling->created_at->format('d m Y') }}</div>
                                             </div>
                                             <div class="mt-3 text-center">
-
                                                 <a href="{{ route('polling.tutup', $polling->id) }}"
-                                                    class="btn btn-sm btn-outline-info mr-2">Tutup</a>
+                                                    class="btn btn-sm btn-outline-info mr-2"
+                                                    onclick="return confirmClose(event)">Tutup</a>
 
                                                 <form action="{{ route('polling.hapus', $polling->id) }}" method="POST"
-                                                    class="d-inline">
+                                                    class="d-inline" onsubmit="return confirmDelete(event)">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-sm btn-outline-danger"
-                                                        onclick="return confirm('Apakah Anda yakin ingin menghapus polling ini?');">Hapus</button>
+                                                    <button type="submit"
+                                                        class="btn btn-sm btn-outline-danger">Hapus</button>
                                                 </form>
                                             </div>
                                         </div>
@@ -63,5 +64,39 @@
                 </div>
             </div>
         </div>
+
+        <script>
+            function confirmClose(event) {
+                event.preventDefault(); // Mencegah link diikuti langsung
+
+                swal({
+                    title: "Yakin ingin menutup polling ini?",
+                    text: "Kamu masih bisa membukanya lagi nanti.",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                }).then((willClose) => {
+                    if (willClose) {
+                        window.location.href = event.target.href; // Arahkan ke link jika user konfirmasi
+                    }
+                });
+            }
+
+            function confirmDelete(event) {
+                event.preventDefault(); // Mencegah form submit langsung
+
+                swal({
+                    title: "Yakin ingin menghapus polling ini?",
+                    text: "Polling yang sudah dihapus tidak dapat dikembalikan.",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                }).then((willDelete) => {
+                    if (willDelete) {
+                        event.target.submit(); // Submit form jika user konfirmasi
+                    }
+                });
+            }
+        </script>
 
     @endsection

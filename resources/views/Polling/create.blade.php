@@ -119,5 +119,22 @@
                 }
             };
         });
+
+        // SweetAlert konfirmasi submit
+        document.getElementById('pollingForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Mencegah submit form langsung
+
+            swal({
+                title: "Yakin ingin membuat polling?",
+                text: "Kamu tidak bisa mengubah polling ini nanti.",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            }).then((willSubmit) => {
+                if (willSubmit) {
+                    this.submit(); // Submit form kalau user konfirmasi
+                }
+            });
+        });
     </script>
 @endsection

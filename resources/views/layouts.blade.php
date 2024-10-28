@@ -73,10 +73,14 @@
                         @auth
                             <!-- Jika user sudah login, tampilkan tombol Logout -->
                             <li>
-                                <a href="#" class="nav-link"
-                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                <a href="#" class="nav-link" onclick="confirmLogout(event);">
                                     Log Out
                                 </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                    style="display: none;">
+                                    @csrf
+                                </form>
+
                             </li>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                 @csrf
@@ -175,6 +179,26 @@
     <!-- Main JS File -->
     <script src="{{ asset('assets/js/main.js') }}"></script>
 
+    <!--Sweet Alert-->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <script>
+        function confirmLogout(event) {
+            event.preventDefault(); // Mencegah form logout langsung submit
+
+            swal({
+                title: "Yakin mau logout?",
+                text: "Kamu harus login lagi buat akses kembali.",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            }).then((willLogout) => {
+                if (willLogout) {
+                    document.getElementById('logout-form').submit(); // Submit form logout kalau user konfirmasi
+                }
+            });
+        }
+    </script>
 
 
 </body>

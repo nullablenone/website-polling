@@ -4,7 +4,7 @@
     <!-- Content -->
     <div class="container mt-5">
         @if (session('error'))
-            <div class="alert alert-danger shadow-sm rounded-pill text-center">
+            <div class="alert alert-danger shadow-sm">
                 {{ session('error') }}
             </div>
         @endif
@@ -26,13 +26,10 @@
                             @foreach ($polling->jawaban as $jawaban)
                                 <label
                                     class="btn btn-outline-success mb-3 rounded-pill py-2 px-4 shadow-sm w-100 position-relative"
-                                    style="transition: background-color 0.3s;">
-
+                                    style="transition: background-color 0.3s; cursor: pointer;">
                                     <input type="radio" name="jawaban_id" value="{{ $jawaban->id }}" required
                                         style="display: none;">
                                     <span class="fw-bold fs-5">{{ $jawaban->option }}</span>
-
-                                    <input type="hidden" value="{{ $polling->id }}" name="polling_id">
                                 </label>
                             @endforeach
                         @else
@@ -48,8 +45,6 @@
                                             <img src="{{ asset($jawaban->option) }}" alt="Pilihan Foto"
                                                 class="img-fluid shadow-sm polling-option shadow-lg"
                                                 style="width: 100%; height: 300px; object-fit: cover; border-radius: 10px; transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;">
-
-                                            <input type="hidden" value="{{ $polling->id }}" name="polling_id">
                                         </label>
                                     </div>
                                 @endforeach
@@ -124,10 +119,25 @@
     </div>
 
     <!-- JavaScript -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
         document.querySelectorAll('input[name="jawaban_id"]').forEach(radioButton => {
-            radioButton.addEventListener('change', function() {
-                document.getElementById('formVote').submit();
+            radioButton.addEventListener('click', function() {
+                // Tampilkan SweetAlert konfirmasi
+                swal({
+                    title: "Yakin dengan pilihan Anda?",
+                    text: "Anda tidak dapat mengubah suara setelah disimpan.",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                }).then((willSubmit) => {
+                    if (willSubmit) {
+                        document.getElementById('formVote')
+                            .submit(); // Submit form jika user konfirmasi
+                    } else {
+                        radioButton.checked = false; // Reset pilihan jika tidak konfirmasi
+                    }
+                });
             });
         });
 
@@ -174,25 +184,5 @@
         const twitterShare = document.getElementById('twitterShare');
         twitterShare.href =
             `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent('http://website-polling.test:8080/{{ $polling->id }}')}`;
-
-
-        document.querySelectorAll('.polling-option').forEach(option => {
-            option.addEventListener('mouseenter', function() {
-                this.style.transform = 'scale(1.05)';
-                this.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.2)';
-            });
-
-            option.addEventListener('mouseleave', function() {
-                this.style.transform = 'scale(1)';
-                this.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)';
-            });
-
-            option.addEventListener('click', function() {
-                document.querySelectorAll('.polling-option').forEach(el => {
-                    el.style.border = 'none';
-                });
-                this.style.border = '3px solid #00BFFF'; // Menambahkan border saat dipilih
-            });
-        });
     </script>
 @endsection
