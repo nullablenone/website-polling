@@ -20,6 +20,7 @@
                         <th>Email</th>
                         <th>ip address</th>
                         <th>Total Polling</th>
+                        <th>Max Polling</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -31,6 +32,7 @@
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->ip_address }}</td>
                             <td>{{ $batas ? $batas->jumlah_polling : 0 }}</td>
+                            <td>{{ $batas ? $batas->batas_polling : 3 }}</td>
                             <td>
                                 <div class="dropdown">
                                     <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
@@ -38,9 +40,9 @@
                                         <i class="bx bx-dots-vertical-rounded"></i>
                                     </button>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="javascript:void(0);"><i
+                                        <a href="{{ route('admin.update', $user->id) }}" class="dropdown-item"><i
                                                 class="bx bx-edit-alt me-1"></i>
-                                            Edit</a>
+                                            Update</a>
                                         <form action="{{ route('admin.hapus', $user->id) }}" method="POST"
                                             onsubmit="return confirm('Yakin ingin menghapus user ini?');">
                                             @csrf
