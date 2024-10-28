@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('user_id')->unique();
             $table->string('ip_address')->unique(); // Simpan alamat IP
             $table->integer('jumlah_polling')->default(0);
+            $table->integer('batas_polling')->default(3);
             $table->timestamps();
         });
     }
