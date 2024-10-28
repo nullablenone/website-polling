@@ -5,6 +5,13 @@
 @section('content')
     <div class="card">
         <div class="card-body">
+            <div class="app-brand justify-content-center">
+                <a href="index.html" class="app-brand-link gap-2">
+                    <span class="app-brand-logo demo">
+                        <img src="{{ asset('logo.svg') }}" alt="" class="img-fluid" style="width: 100%; height: 50px;">
+                    </span>
+                </a>
+            </div>
 
             <h4 class="mb-2" style="color: #008374">Ayo mulai! 🚀</h4>
             <p class="mb-4">Bikin pengelolaan pollingmu jadi lebih gampang dan seru!</p>

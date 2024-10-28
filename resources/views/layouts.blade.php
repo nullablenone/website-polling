@@ -60,7 +60,10 @@
         <div class="branding d-flex align-items-center">
             <div class="container position-relative d-flex align-items-center justify-content-between">
                 <a href="{{ route('polling.create') }}" class="logo d-flex align-items-center">
-                    <h1 class="sitename">ngepolling</h1>
+                    <span class="app-brand-logo demo">
+                        <img src="{{ asset('logo.svg') }}" alt="" class="img-fluid"
+                            style="width: 100%; height: 50px;">
+                    </span>
                 </a>
 
                 <nav id="navmenu" class="navmenu">

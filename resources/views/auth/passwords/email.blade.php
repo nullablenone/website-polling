@@ -3,6 +3,13 @@
 @section('content')
     <div class="card">
         <div class="card-body">
+            <div class="app-brand justify-content-center">
+                <a href="index.html" class="app-brand-link gap-2">
+                    <span class="app-brand-logo demo">
+                        <img src="{{ asset('logo.svg') }}" alt="" class="img-fluid" style="width: 100%; height: 50px;">
+                    </span>
+                </a>
+            </div>
             @if (session('status'))
                 <div class="alert alert-success" role="alert">
                     {{ session('status') }}

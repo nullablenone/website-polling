@@ -4,6 +4,13 @@
 @section('content')
     <div class="card">
         <div class="card-body">
+            <div class="app-brand justify-content-center">
+                <a href="index.html" class="app-brand-link gap-2">
+                    <span class="app-brand-logo demo">
+                        <img src="{{ asset('logo.svg') }}" alt="" class="img-fluid" style="width: 100%; height: 50px;">
+                    </span>
+                </a>
+            </div>
 
             <h4 class="mb-2" style="color: #008374">Selamat Datang! 👋</h4>
             <p class="mb-4">Silakan masuk dan mulai membuat mengikuti polling.</p>
@@ -30,7 +37,8 @@
                     </div>
                     <div class="input-group input-group-merge">
                         <input type="password" id="password" class="form-control @error('password') is-invalid @enderror"
-                            name="password" placeholder="············" required autocomplete="current-password" autocomplete="off">
+                            name="password" placeholder="············" required autocomplete="current-password"
+                            autocomplete="off">
                         <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                     </div>
                     @error('password')
