@@ -1,37 +1,37 @@
-# Website Polling
+# Polling Website
 
-Website ini adalah platform untuk membuat dan mengelola polling, dirancang menggunakan Laravel dan beberapa teknologi pendukung.
+This website is a platform for creating and managing polls, built using Laravel and supporting technologies.
 
-## 🎯 Tujuan Proyek
+## 🎯 Project Goals
 
-Menyediakan platform untuk membuat polling interaktif, baik polling teks maupun foto, dengan fitur-fitur untuk user dan admin.
+To provide a platform for creating interactive polls, including both text and photo polls, with features for both users and administrators.
 
-## ✨ Fitur Utama
+## ✨ Main Features
 
-### Fitur untuk User
+### User Features
 
-- **Login**: Otentikasi menggunakan Laravel UI.  
-- **Membuat Polling**: Dukungan untuk polling biasa dan polling foto.  
-- **Dashboard User**: Melihat daftar polling yang dibuat, menghapus, menutup polling.  
-- **Voting**: Memberikan suara pada polling yang dibuat oleh user lain.  
+- **Login**: Authentication using Laravel UI.  
+- **Create Polls**: Supports both regular and photo polls.  
+- **User Dashboard**: View created polls, delete, and close polls.  
+- **Voting**: Vote on polls created by other users.  
 
-### Fitur untuk Admin
+### Admin Features
 
-- **Dashboard Admin**: Mengelola daftar user dan jumlah polling yang dibuat oleh masing-masing user.  
-- **Pembatasan Polling**: Membatasi jumlah polling yang dapat dibuat oleh user. Admin memiliki kontrol untuk mengizinkan user membuat polling tambahan. Sistem pembatasan ini bekerja berdasarkan IP address dan per akun, sehingga secara otomatis mengatasi masalah spam dengan banyak akun.
+- **Admin Dashboard**: Manage the list of users and the number of polls created by each user.  
+- **Poll Limitation**: Restrict the number of polls a user can create. Admins have control to allow users to create additional polls. This limitation system works based on IP address and per account, automatically mitigating spam from multiple accounts.
 
-**Catatan**: Beberapa fitur admin masih dalam tahap pengembangan.
+**Note**: Some admin features are still under development.
 
-## 🛠️ Teknologi yang Digunakan
+## 🛠️ Technologies Used
 
-- **Backend**: Laravel dengan Laravel UI untuk otentikasi.  
+- **Backend**: Laravel with Laravel UI for authentication.  
 - **Role Management**: Laravel Spatie Role Permission.  
-- **Frontend**: Bootstrap dan JavaScript.  
-- **Interaktivitas**: Sweet Alert.  
+- **Frontend**: Bootstrap and JavaScript.  
+- **Interactivity**: Sweet Alert.  
 
-## 🚀 Cara Menjalankan Proyek
+## 🚀 How to Run the Project
 
-1. Clone repositori ini:  
+1. Clone this repository:  
    ```bash
    git clone <repository-url>
    cd <repository-folder>
@@ -43,18 +43,18 @@ Menyediakan platform untuk membuat polling interaktif, baik polling teks maupun 
    npm install
    ```
 
-3. Buat file `.env` dan atur konfigurasi database. Lalu jalankan:  
+3. Create a `.env` file and configure your database settings. Then run:  
    ```bash
    php artisan migrate --seed
    ```
 
-4. Jalankan server:  
+4. Start the server:  
    ```bash
    php artisan serve
    ```
 
-5. Akses aplikasi di `http://localhost:8000`.
+5. Access the application at `http://localhost:8000`.
 
-## 🚧 Status Proyek
+## 🚧 Project Status
 
-Proyek ini masih dalam tahap pengembangan, terutama untuk fitur admin.
+This project is still under development, especially the admin features.
