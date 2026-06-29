@@ -1,66 +1,132 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# ngepolling 🗳️
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+![Overview](public/assets/overview.png)
 
-## About Laravel
+[![Laravel Version](https://img.shields.io/badge/Laravel-11.x-red.svg?style=flat-square&logo=laravel)](https://laravel.com)
+[![PHP Version](https://img.shields.io/badge/PHP-%5E8.2-blue.svg?style=flat-square&logo=php)](https://php.net)
+[![License](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+**ngepolling** adalah aplikasi web polling sederhana namun tangguh yang dirancang untuk memudahkan pengguna dalam membuat jajak pendapat (polling) secara instan, membagikannya, dan mengumpulkan suara dengan aman. Aplikasi ini dibangun menggunakan framework **Laravel 11**, **Bootstrap**, dan didukung oleh **Vite** untuk pengelolaan aset frontend.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Aplikasi ini dilengkapi dengan fitur keamanan dasar seperti pembatasan jumlah polling harian dan pencegahan *double-voting* berdasarkan alamat IP.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## ✨ Fitur Utama
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- **📝 Pembuatan Polling Instan**: Pengguna dapat membuat polling baru dengan menentukan judul (minimal 5 karakter) serta menambahkan beberapa opsi jawaban secara dinamis.
+- **🛡️ Anti-Spam (Batas Polling Harian)**: Membatasi pengguna untuk membuat maksimal **3 polling per hari** untuk setiap alamat IP.
+- **🔒 Anti Double-Voting**: Mencegah pemungutan suara berulang kali oleh pengguna yang sama. Sistem mencatat alamat IP pemilih dan hanya mengizinkan **1 suara per IP** untuk setiap polling.
+- **📊 Hasil Polling Real-time**: Menampilkan persentase dan hasil perolehan suara secara langsung setelah pengguna selesai melakukan voting.
+- **🔍 Pencarian Polling**: Memudahkan pencarian jajak pendapat yang aktif dan terbaru berdasarkan judul polling.
+- **📱 Desain Responsif**: Antarmuka modern yang nyaman diakses melalui perangkat mobile maupun desktop menggunakan Bootstrap dan font kustom.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 🛠️ Teknologi yang Digunakan
 
-## Laravel Sponsors
+- **Backend**: PHP >= 8.2 & Laravel 11.x
+- **Frontend**: Blade Templating, Bootstrap, Font Awesome (Icons)
+- **Asset Manager**: Vite
+- **Database**: SQLite (default/development) atau MySQL
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+---
 
-### Premium Partners
+## 📂 Struktur Database
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+Aplikasi menggunakan 4 tabel utama untuk mengelola data polling dan voting:
 
-## Contributing
+1. **`pollings`**: Menyimpan data utama jajak pendapat.
+   - `id` (Primary Key)
+   - `title` (Judul Polling)
+   - `timestamps`
+2. **`jawabans`**: Menyimpan pilihan jawaban/opsi untuk setiap polling.
+   - `id` (Primary Key)
+   - `polling_id` (Foreign Key terhubung ke `pollings`)
+   - `option` (Teks opsi jawaban)
+   - `vote` (Jumlah perolehan suara, default: 0)
+   - `timestamps`
+3. **`votes`**: Melacak siapa saja yang sudah memilih berdasarkan IP.
+   - `id` (Primary Key)
+   - `polling_id` (Foreign Key terhubung ke `pollings`)
+   - `ip_address` (Alamat IP pemilih)
+   - `timestamps`
+4. **`batas_pollings`**: Melacak batas pembuatan polling per hari untuk masing-masing IP.
+   - `id` (Primary Key)
+   - `ip_address` (Alamat IP pembuat)
+   - `jumlah_polling` (Jumlah polling yang dibuat pada hari tersebut)
+   - `tanggal_polling` (Tanggal pembuatan terakhir)
+   - `timestamps`
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+---
 
-## Code of Conduct
+## 🚀 Panduan Instalasi dan Penggunaan
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Ikuti langkah-langkah berikut untuk menjalankan project ini secara lokal di komputer Anda:
 
-## Security Vulnerabilities
+### 1. Prasyarat (Prerequisites)
+Pastikan komputer Anda sudah terinstall:
+- **PHP** (minimal versi 8.2)
+- **Composer**
+- **Node.js & NPM**
+- **Laragon / XAMPP** (jika ingin menggunakan database MySQL)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 2. Kloning Repositori
+```bash
+git clone https://github.com/nullablenone/website-polling.git
+cd website-polling
+```
 
-## License
+### 3. Instalasi Dependensi
+Jalankan perintah berikut untuk menginstal dependensi PHP dan Javascript:
+```bash
+# Instal dependensi backend (Composer)
+composer install
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+# Instal dependensi frontend (NPM)
+npm install
+```
+
+### 4. Konfigurasi Environment (`.env`)
+Salin file konfigurasi `.env.example` menjadi `.env`:
+```bash
+cp .env.example .env
+```
+Secara default, Laravel akan menggunakan **SQLite**. Jika Anda ingin menggunakan SQLite, buat file database kosong di folder database:
+- Windows (PowerShell):
+  ```powershell
+  New-Item -Path database\database.sqlite -ItemType File
+  ```
+- Linux/Mac/Git Bash:
+  ```bash
+  touch database/database.sqlite
+  ```
+*Catatan: Jika ingin menggunakan MySQL, silakan sesuaikan konfigurasi `DB_CONNECTION`, `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME`, dan `DB_PASSWORD` di dalam file `.env`.*
+
+### 5. Generate Application Key
+```bash
+php artisan key:generate
+```
+
+### 6. Jalankan Migrasi Database
+Jalankan perintah berikut untuk membuat tabel database yang diperlukan:
+```bash
+php artisan migrate
+```
+
+### 7. Jalankan Server Pengembangan
+Buka dua tab terminal dan jalankan perintah di bawah ini secara bersamaan:
+
+- **Terminal 1** (Menjalankan server Laravel):
+  ```bash
+  php artisan serve
+  ```
+- **Terminal 2** (Menjalankan kompilasi aset frontend Vite):
+  ```bash
+  npm run dev
+  ```
+
+Buka browser Anda dan akses aplikasi di alamat `http://127.0.0.1:8000`.
+
+---
+
