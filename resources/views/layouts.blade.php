@@ -12,8 +12,6 @@
             color: #818cf8 !important;
         }
     </style>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
     <link rel="icon" href="{{ asset('assets/images/nullablenone.jpg') }}" type="image/x-icon">
