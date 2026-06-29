@@ -16,7 +16,7 @@
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
-    <link rel="icon" href="{{ asset('assets/images/graha.png') }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('assets/images/nullablenone.jpg') }}" type="image/x-icon">
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
@@ -49,7 +49,6 @@
                     <i class="bi bi-envelope d-flex align-items-center">
                         <a href="mailto:useryesa9@gmail.com">useryesa9@gmail.com</a>
                     </i>
-                    <i class="bi bi-phone d-flex align-items-center ms-4"><span>+62 858-1011-6384</span></i>
                 </div>
                 <div class="social-links d-none d-md-flex align-items-center">
                     <a href="https://www.linkedin.com/in/muhamad-yesa/" class="linkedin"><i
@@ -117,7 +116,6 @@
 
                 <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
                     <h4>Kontak</h4>
-                    <p class="mt-4"><strong>Phone:</strong> <span>+62 858-1011-6384</span></p>
                     <p><strong>Email:</strong> <span>useryesa9@gmail.com</span></p>
                 </div>
 
