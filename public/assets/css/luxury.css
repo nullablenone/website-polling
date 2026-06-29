@@ -1,0 +1,506 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+
+/* Minimalist Editorial Dark variables overrides */
+:root {
+  --default-font: "Inter", sans-serif !important;
+  --heading-font: "Playfair Display", Georgia, serif !important;
+  
+  --background-color: #121212 !important; /* Graphite Black */
+  --default-color: #d4d4d8 !important; /* Muted Off-White */
+  --heading-color: #ffffff !important;
+  --accent-color: #a1a1aa !important; /* Muted Silver/Gray */
+  --surface-color: #1a1a1a !important; /* Solid Charcoal Card */
+  --contrast-color: #ffffff !important;
+  
+  --nav-color: #a1a1aa !important;
+  --nav-hover-color: #ffffff !important;
+  --nav-mobile-background-color: #161616 !important;
+  --nav-dropdown-background-color: #1a1a1a !important;
+  --nav-dropdown-color: #a1a1aa !important;
+  --nav-dropdown-hover-color: #ffffff !important;
+}
+
+/* Background styles */
+body {
+  background-color: #121212 !important;
+  color: #d4d4d8 !important;
+  font-family: "Inter", sans-serif !important;
+}
+
+/* Typography styles - Editorial Feel */
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Playfair Display", Georgia, serif !important;
+  font-weight: 600 !important;
+  color: #ffffff !important;
+  letter-spacing: -0.2px !important;
+}
+
+/* Clean Editorial Navbar */
+.header {
+  background: #121212 !important;
+  border-bottom: 1px solid #27272a !important;
+  transition: all 0.2s ease !important;
+}
+
+.header .topbar {
+  background-color: #161616 !important;
+  border-bottom: 1px solid #27272a !important;
+}
+
+.header .topbar .contact-info i, .header .topbar .contact-info i a, .header .topbar .contact-info i span {
+  color: #71717a !important;
+  font-family: "Inter", sans-serif !important;
+}
+
+.header .topbar .contact-info i a:hover {
+  color: #ffffff !important;
+}
+
+.header .topbar .social-links a {
+  color: #71717a !important;
+}
+
+.header .topbar .social-links a:hover {
+  color: #ffffff !important;
+}
+
+.header .logo h1 {
+  font-family: "Playfair Display", Georgia, serif !important;
+  font-weight: 700 !important;
+  font-style: italic !important;
+  color: #ffffff !important;
+  letter-spacing: -0.5px !important;
+}
+
+.header .logo span {
+  color: #10b981 !important; /* Sage green dot */
+}
+
+/* Nav Menu Desktop Underlines */
+@media (min-width: 1200px) {
+  .navmenu a {
+    font-weight: 500 !important;
+    font-family: "Inter", sans-serif !important;
+    font-size: 0.95rem !important;
+    letter-spacing: 0.2px;
+  }
+  .navmenu > ul > li > a:before {
+    background-color: #ffffff !important;
+    height: 1px !important;
+    bottom: -4px !important;
+  }
+}
+
+.navmenu a:hover {
+  color: #ffffff !important;
+}
+
+/* Solid Flat Cards */
+.card {
+  background: #1a1a1a !important;
+  border: 1px solid #27272a !important;
+  border-radius: 6px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.card:hover {
+  border-color: #3f3f46 !important;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25) !important;
+  transform: none !important; /* No floating bounce */
+}
+
+/* Card Header */
+.card-header {
+  background-color: transparent !important;
+  border-bottom: 1px solid #27272a !important;
+  padding: 24px !important;
+}
+
+/* Card Footer */
+.card-footer {
+  background-color: transparent !important;
+  border-top: 1px solid #27272a !important;
+  padding: 24px !important;
+}
+
+/* Crisp Flat Form Control */
+.form-control {
+  background-color: #161616 !important;
+  border: 1px solid #27272a !important;
+  color: #ffffff !important;
+  border-radius: 4px !important;
+  padding: 10px 14px !important;
+  font-family: "Inter", sans-serif !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.form-control:focus {
+  border-color: #52525b !important;
+  background-color: #18181b !important;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.05) !important;
+  outline: none !important;
+}
+
+.form-control::placeholder {
+  color: #52525b !important;
+}
+
+/* Editorial Buttons - Simple, Solid, Rectangular (6px) */
+.btn-primary, .btn-success, .btn-info, .btn-dark, .btn-outline-secondary {
+  border-radius: 6px !important;
+  padding: 10px 22px !important;
+  font-weight: 500 !important;
+  font-family: "Inter", sans-serif !important;
+  letter-spacing: 0.1px;
+  transition: all 0.15s ease-in-out !important;
+  box-shadow: none !important;
+}
+
+/* Primary Button (Dark Slate/Zinc) */
+.btn-primary {
+  background-color: #27272a !important;
+  border: 1px solid #3f3f46 !important;
+  color: #ffffff !important;
+}
+
+.btn-primary:hover {
+  background-color: #3f3f46 !important;
+  border-color: #52525b !important;
+  color: #ffffff !important;
+  transform: none !important;
+}
+
+/* Success Button (Solid Off-White - Minimalist Primary Action) */
+.btn-success {
+  background-color: #f4f4f5 !important;
+  border: 1px solid #f4f4f5 !important;
+  color: #09090b !important;
+}
+
+.btn-success:hover {
+  background-color: #e4e4e7 !important;
+  border-color: #e4e4e7 !important;
+  color: #09090b !important;
+  transform: none !important;
+}
+
+/* Outline Secondary Button */
+.btn-outline-secondary {
+  background-color: transparent !important;
+  border: 1px solid #27272a !important;
+  color: #a1a1aa !important;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #27272a !important;
+  border-color: #3f3f46 !important;
+  color: #ffffff !important;
+}
+
+.btn-info {
+  background-color: #27272a !important;
+  border: 1px solid #3f3f46 !important;
+  color: #ffffff !important;
+}
+
+.btn-info:hover {
+  background-color: #3f3f46 !important;
+  border-color: #52525b !important;
+}
+
+.btn-dark {
+  background-color: #161616 !important;
+  border: 1px solid #27272a !important;
+  color: #ffffff !important;
+}
+
+.btn-dark:hover {
+  background-color: #27272a !important;
+}
+
+/* Custom Checkbox/Radio List (Tactile clean card style) */
+.luxury-option {
+  display: flex !important;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 16px 20px !important;
+  margin-bottom: 12px !important;
+  background: #161616 !important;
+  border: 1px solid #27272a !important;
+  border-radius: 6px !important;
+  color: #a1a1aa !important;
+  cursor: pointer;
+  font-family: "Inter", sans-serif !important;
+  transition: all 0.15s ease-in-out !important;
+  box-shadow: none !important;
+}
+
+.luxury-option:hover {
+  background: #1c1c1f !important;
+  border-color: #3f3f46 !important;
+  color: #ffffff !important;
+  transform: none !important;
+}
+
+.luxury-option:has(input[type="radio"]:checked) {
+  background: rgba(16, 185, 129, 0.04) !important;
+  border-color: #10b981 !important;
+  color: #10b981 !important;
+}
+
+.luxury-option input[type="radio"]:checked ~ i {
+  color: #10b981 !important;
+}
+
+.luxury-option input[type="radio"]:checked ~ i::before {
+  content: "\f058" !important; /* fa-check-circle */
+  font-family: "Font Awesome 6 Free" !important;
+  font-weight: 900 !important;
+}
+
+/* Solid Flat Progress Bar - No glows, no stripes, no gradients */
+.progress {
+  background-color: #27272a !important;
+  border-radius: 4px !important;
+  overflow: hidden;
+  height: 20px !important;
+  border: none !important;
+}
+
+.progress-bar {
+  background: #10b981 !important; /* Solid Sage Green */
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  font-family: "Inter", sans-serif !important;
+  font-size: 0.8rem !important;
+  box-shadow: none !important;
+  transition: width 0.8s ease-in-out !important;
+}
+
+/* Flat Dropdown Styling */
+.dropdown-menu {
+  background: #1a1a1a !important;
+  border: 1px solid #27272a !important;
+  border-radius: 6px !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3) !important;
+}
+
+.dropdown-item {
+  color: #a1a1aa !important;
+  font-family: "Inter", sans-serif !important;
+}
+
+.dropdown-item:hover {
+  background-color: #27272a !important;
+  color: #ffffff !important;
+}
+
+/* Footer layout style */
+.footer {
+  background-color: #0d0d0d !important;
+  border-top: 1px solid #27272a !important;
+  color: #71717a !important;
+  font-family: "Inter", sans-serif !important;
+}
+
+.footer .footer-top {
+  border-bottom: 1px solid #27272a !important;
+  padding-bottom: 40px !important;
+}
+
+.footer h4 {
+  color: #ffffff !important;
+  font-family: "Playfair Display", Georgia, serif !important;
+  font-weight: 600 !important;
+  font-size: 1.15rem !important;
+}
+
+.footer .social-links a {
+  border: 1px solid #27272a !important;
+  color: #a1a1aa !important;
+  background-color: #161616 !important;
+  border-radius: 4px !important; /* Flat social link borders */
+}
+
+.footer .social-links a:hover {
+  color: #ffffff !important;
+  border-color: #ffffff !important;
+  background-color: #27272a !important;
+}
+
+.footer .copyright {
+  border-top: none !important;
+}
+
+/* Solid Flat Alerts */
+.alert-warning {
+  background-color: rgba(234, 179, 8, 0.05) !important;
+  border: 1px solid rgba(234, 179, 8, 0.15) !important;
+  color: #fef08a !important;
+  border-radius: 6px !important;
+}
+
+.alert-info {
+  background-color: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid #27272a !important;
+  color: #d4d4d8 !important;
+  border-radius: 6px !important;
+}
+
+.alert-danger {
+  background-color: rgba(244, 63, 94, 0.05) !important;
+  border: 1px solid rgba(244, 63, 94, 0.15) !important;
+  color: #fecdd3 !important;
+  border-radius: 6px !important;
+}
+
+/* Badges */
+.badge-primary {
+  background: #27272a !important;
+  color: #e4e4e7 !important;
+  border: 1px solid #3f3f46 !important;
+  padding: 6px 12px !important;
+  border-radius: 4px !important;
+  font-family: "Inter", sans-serif !important;
+  font-size: 0.8rem !important;
+}
+
+/* Preloader custom color */
+#preloader {
+  background-color: #121212 !important;
+}
+
+#preloader:before {
+  border: 4px solid #161616 !important;
+  border-top-color: #ffffff !important;
+  border-radius: 50%;
+}
+
+/* Scroll Top Button custom color */
+.scroll-top {
+  background-color: #27272a !important;
+  border: 1px solid #3f3f46 !important;
+  border-radius: 4px !important;
+}
+
+.scroll-top i {
+  color: #ffffff !important;
+}
+
+.scroll-top:hover {
+  background-color: #3f3f46 !important;
+}
+
+/* Search bar styling */
+.search-bar .input-group {
+  background: #161616 !important;
+  border: 1px solid #27272a !important;
+  border-radius: 6px !important;
+  padding: 4px !important;
+}
+
+.search-bar .input-group:focus-within {
+  border-color: #3f3f46 !important;
+}
+
+.search-bar .form-control {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Polling item card hover overrides */
+.polling-item {
+  transition: border-color 0.2s ease !important;
+}
+
+.polling-item:hover {
+  border-color: #3f3f46 !important;
+  transform: none !important; /* Clear old floating animation */
+}
+
+.main {
+  padding-top: 120px !important;
+}
+
+/* Accessibility and text legibility overrides */
+.text-muted, .char-counter {
+  color: #a1a1aa !important;
+}
+
+.text-white-50 {
+  color: #a1a1aa !important;
+}
+
+.text-secondary {
+  color: #cbd5e1 !important;
+}
+
+.alert .text-muted {
+  color: #a1a1aa !important;
+}
+
+.alert strong, .alert b {
+  color: #ffffff !important;
+}
+
+/* Footer Link Legibility Legibility Fixes */
+.footer .footer-links ul a {
+  color: #a1a1aa !important;
+}
+
+.footer .footer-links ul a:hover {
+  color: #ffffff !important;
+}
+
+.footer .footer-about p {
+  color: #a1a1aa !important;
+}
+
+.footer .footer-contact p {
+  color: #a1a1aa !important;
+}
+
+.footer .footer-contact p strong {
+  color: #ffffff !important;
+}
+
+/* Luxury poll item links (Playfair Display) */
+.luxury-poll-link {
+  color: #ffffff !important;
+  font-family: "Playfair Display", Georgia, serif !important;
+  text-decoration: none !important;
+  transition: color 0.15s ease-in-out !important;
+}
+
+.luxury-poll-link:hover {
+  color: #10b981 !important;
+}
+
+/* Option letter badge (Editorial list index look) */
+.option-letter-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background-color: #27272a !important;
+  border: 1px solid #3f3f46 !important;
+  color: #cbd5e1 !important;
+  border-radius: 4px !important;
+  font-size: 0.9rem !important;
+  font-weight: 600 !important;
+  font-family: "Inter", sans-serif !important;
+  transition: all 0.15s ease-in-out !important;
+}
+
+.luxury-option:has(input[type="radio"]:checked) .option-letter-badge {
+  background-color: #10b981 !important;
+  border-color: #10b981 !important;
+  color: #09090b !important;
+}
+
+
+
